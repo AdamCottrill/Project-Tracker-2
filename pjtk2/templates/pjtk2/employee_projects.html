@@ -107,7 +107,9 @@ table div.rotated {
     </div>
     <div class="col-md-2">
       <br />
-      <button type="button" class="btn btn-success" disabled="disabled">Download xls</button>
+      <a href="{% url 'excel_csv' %}"
+         onclick="javascript:window.location=this.href">
+      <button type="button" class="btn btn-success" >Download xls</button></a>
     </div>
   </div>
   <br />

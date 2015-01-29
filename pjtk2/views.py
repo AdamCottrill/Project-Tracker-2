@@ -1094,3 +1094,36 @@ def report_desc_view(request):
     tracker reporting requirements."""
     return render_to_response('pjtk2/reporting_milestone_descriptions.html',
                               context_instance=RequestContext(request))
+
+from xlwt import Workbook
+
+def excel_csv(request):
+    '''a test to see if we can download an excel file.'''
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=excel_tests.xls'
+
+    #yr=2014
+    #qs=Project.objects.filter(year=yr)
+    qs=Project.objects.all()
+    colnames = ['year','prj_cd','prj_nm', 'project_type', 'proj_lead']
+
+    book = Workbook()
+    sheet1 = book.add_sheet('all', cell_overwrite_ok=True)
+    row1=sheet1.row(0)
+    for c, nm in enumerate(colnames):
+        row1.write(c,nm)
+    r=1
+    for item in qs:
+            row = sheet1.row(r)
+            row.write(0,item.year)
+            row.write(1,item.prj_cd)
+            row.write(2,item.prj_nm)
+            row.write(3,str(item.project_type))
+            row.write(4,item.status())
+            r+=1
+
+    book.save(response)
+
+
+
+    return response

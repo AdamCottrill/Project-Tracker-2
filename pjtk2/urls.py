@@ -141,6 +141,7 @@ urlpatterns = patterns('pjtk2.views',
     #this function is used to download reports and files from project pages
     url(r'^serve_file/(?P<filename>.+)/$', 'serve_file', name='serve_file'),
 
+    url(r'^test_excel/$', 'excel_csv', name='excel_csv'),
 
 #bookmarking
     url((r'^bookmarkproject/'
