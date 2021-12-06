@@ -1,14 +1,14 @@
-from django.db.models import Q, Prefetch
+from django.db.models import Q, Prefetch, F
 from django.http import Http404
 from django.contrib.auth import get_user_model
 from django.contrib.gis.geos import GEOSGeometry, Polygon
 
 from rest_framework import generics, viewsets, status
-from rest_framework.generics import RetrieveAPIView
+from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.response import Response
 
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, BasePermission, SAFE_METHODS
 
 from django_filters import rest_framework as filters
 
@@ -23,18 +23,44 @@ from .serializers import (
     ProjectPointSerializer,
     ProjectPolygonSerializer,
     UserSerializer,
+    ReportSerializer,
+    AssociatedFileSerializer,
 )
-from pjtk2.models import Project, ProjectType, SamplePoint, ProjectPolygon, ProjectImage
+from pjtk2.models import (
+    Project,
+    ProjectType,
+    SamplePoint,
+    ProjectPolygon,
+    ProjectImage,
+    Report,
+    AssociatedFile,
+)
 
-from pjtk2.filters import SamplePointFilter, ProjectFilter
+from pjtk2.filters import (
+    SamplePointFilter,
+    ProjectFilter,
+    AssociatedFileFilter,
+    ReportFilter,
+)
 
 from pjtk2.utils.spatial_utils import find_roi_points
 
 User = get_user_model()
 
 
+class ReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.method in SAFE_METHODS
+
+
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 50
+    page_size_query_param = "page_size"
+    max_page_size = 1000
+
+
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 500
     page_size_query_param = "page_size"
     max_page_size = 1000
 
@@ -227,3 +253,61 @@ def points_roi(request, how="contained"):
     #     )
 
     return Response(serializer.data)
+
+
+class ReportListView(ListAPIView):
+    """A read-only endpoint to return currently available reports."""
+
+    serializer_class = ReportSerializer
+    permission_classes = [ReadOnly]
+    pagination_class = LargeResultsSetPagination
+    filterset_class = ReportFilter
+
+    def get_queryset(self):
+        """ """
+        queryset = (
+            Report.objects.filter(current=True, report_path__isnull=False)
+            .annotate(
+                prj_cd=F("projectreport__project__prj_cd"),
+                report_type=F("projectreport__milestone__label_abbrev"),
+                _uploaded_by=F("uploaded_by__username"),
+            )
+            .values(
+                "prj_cd",
+                "report_type",
+                "current",
+                "report_path",
+                "uploaded_on",
+                "_uploaded_by",
+            )
+        )
+
+        return queryset
+
+
+class AssociatedFilesListView(ListAPIView):
+    """A read-only endpoint to return associated files."""
+
+    serializer_class = AssociatedFileSerializer
+    permission_classes = [ReadOnly]
+    pagination_class = LargeResultsSetPagination
+    filterset_class = AssociatedFileFilter
+
+    def get_queryset(self):
+        """ """
+        queryset = (
+            AssociatedFile.objects.filter(current=True)
+            .annotate(
+                prj_cd=F("project__prj_cd"),
+                _uploaded_by=F("uploaded_by__username"),
+            )
+            .values(
+                "prj_cd",
+                "current",
+                "file_path",
+                "uploaded_on",
+                "_uploaded_by",
+            )
+        )
+
+        return queryset

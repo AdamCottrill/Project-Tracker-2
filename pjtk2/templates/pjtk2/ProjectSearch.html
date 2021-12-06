@@ -6,7 +6,7 @@
 {% block extrahead  %}
 
     <link rel="stylesheet" href="{% static "css/theme.bootstrap.css" %}" />
-    
+
 
 {% endblock %}
 
@@ -21,18 +21,18 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h2>Search For Projects By Any Keyword</h2>
-                <form id="search" class="form-search" 
+                <form id="search" class="form-search"
                       method="get">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder =
                                      "keywords or phrases" {% if search  %}value="{{ search }}" {% endif %}>
 
                         {% include "pjtk2/_search_hidden_inputs.html" %}
-                        
-                        {% if filters.prj_cd %}
-                            <input type="hidden" name="prj_cd" value="{{filters.prj_cd}}" />
+
+                        {% if filters.prj_cd__like %}
+                            <input type="hidden" name="prj_cd__like" value="{{filters.prj_cd__like}}" />
                         {% endif %}
-                        
+
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <i class="glyphicon glyphicon-search"></i>
@@ -82,7 +82,7 @@
                                 <input type="text" class="form-control" id="first-year" name="first_year" placeholder =
                                              "first year">
                             </div>
-                            <div class="form-group">                                
+                            <div class="form-group">
                                 <input type="text" class="form-control" id="last-year" name="last_year" placeholder =
                                              "last year">
                             </div>
@@ -91,44 +91,44 @@
                             </button>
 
                         </form>
-                        
+
                     </div>
                 </div>
 
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Project Code
-                        {% if 'prj_cd' in filters %}
-                            <a class="pull-right" href="{% strip_parameter 'prj_cd' %}">Reset</a>
+                        {% if 'prj_cd__like' in filters %}
+                            <a class="pull-right" href="{% strip_parameter 'prj_cd__like' %}">Reset</a>
                         {% endif %}
                     </div>
                     <div class="panel-body">
 
-                        <form id="prj_cd" method="get">
+                        <form id="prj_cd__like" method="get">
 
                             <div class="form-group">
-                                <input type="text" class="form-control"  name="prj_cd" placeholder = 
-                                             "Project Code Contains..." value="{{filters.prj_cd}}">
+                                <input type="text" class="form-control"  name="prj_cd__like" placeholder =
+                                             "Project Code Contains..." value="{{filters.prj_cd__like}}">
                             </div>
 
                             {% include "pjtk2/_search_hidden_inputs.html" %}
-                            
+
                             {% if filters.search %}
                                 <input type="hidden" name="search" value="{{filters.search}}" />
                             {% endif %}
-                            
+
                             <button class="btn btn-default btn-sm" type="submit" >
                                 Update
                             </button>
 
                         </form>
-                        
+
                     </div>
                 </div>
 
-                
 
-                
+
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Project Scope
                         {% if 'scope' in filters %}
@@ -139,14 +139,14 @@
 
                         <ul>
                             {% for item in project_scope %}
-                                <li> 
+                                <li>
                                     <a href="?{% query_transform scope=item.projScope %}">
                                         {{  item.name }} (n={{item.N}})
                                     </a>
                                 </li>
                             {% endfor %}
                         </ul>
-                        
+
                     </div>
                 </div>
 
@@ -168,7 +168,7 @@
                             {% endfor %}
                         </ul>
 
-                        
+
                     </div>
                 </div>
 
@@ -181,7 +181,7 @@
                     <div class="panel-body">
                         <ul>
                             {% for item in protocols %}
-                                <li> 
+                                <li>
                                     <a href="?{% query_transform protocol=item.protocolAbbrev %}">
                                         {{  item.projProtocol }} ({{ item.protocolAbbrev  }}) (n={{item.N}})
                                     </a>
@@ -189,32 +189,29 @@
                             {% endfor %}
                         </ul>
 
-                        
+
                     </div>
                 </div>
 
-                
-                
-                
             </div>
             <div class="col-md-9">
-                
+
                 {% if filters %}
                     <h3>{% if lake %} {{lake.lake_name}} {% endif %} Projects
                         {% if filters.search %} that contain "{{ search }}" {% endif %}
                         {% if filters.first_year %} run after {{ filters.first_year }} {% endif %}
                         {% if filters.last_year %} run before {{ filters.last_year }} {% endif %}
-                        {% if filters.prj_cd %}  have a project code like "{{ filters.prj_cd }}" {% endif %}
+                        {% if filters.prj_cd__like %}  have a project code like "{{ filters.prj_cd__like }}" {% endif %}
                         (n={{ project_count  }})
                     </h3>
                 {% endif %}
-                
-                
+
+
                 {% if object_list %}
 
 
 
-                    
+
                     <table cellspacing="0" class="tablesorter">
                         <thead>
                             <tr>
@@ -268,7 +265,7 @@
                     {% endif %}
 
 
-                    
+
 
                 {% else %}
                     <br />
@@ -320,7 +317,7 @@
              vars[key] = value;
          });
          return vars;
-     }; 
+     };
      function getUrlParam(parameter, defaultvalue){
          var urlparameter = defaultvalue;
          if(window.location.href.indexOf(parameter) > -1){
@@ -349,7 +346,7 @@
 
 
      })
-     
+
 
      const resetYears = function() {
          let url = window.location.href;
@@ -361,8 +358,8 @@
          url = url.endsWith("?") ? url.replace("?","") : url;
          window.location.replace(url);
      }
-     
-     
+
+
      const handleClick = function() {
          // get the value of the first year and last inputs
 
@@ -371,7 +368,7 @@
          let firstYear = document.getElementById("first-year").value;
          let lastYear = document.getElementById("last-year").value;
 
-         
+
          // if first_year exists and can be parsed to an integer between 1950 and 2050, update the query string
          // if last_year exists and can be parsed to an integer between 1950 and 2050, update the query string
 
@@ -382,33 +379,33 @@
          let url = window.location.href;
 
          if (firstYear && urlFirstYear){
-             url = url.replace("first_year="+ urlFirstYear, "first_year=" + firstYear)         
+             url = url.replace("first_year="+ urlFirstYear, "first_year=" + firstYear)
          } else if (urlFirstYear) {
              url = url.replace("&first_year="+ urlFirstYear, "");
          } else if (firstYear) {
              tmp = url.indexOf("?") >=0 ? "&first_year="+ firstYear :
-                   "?first_year="+ firstYear;               
+                   "?first_year="+ firstYear;
              url = url + tmp ;
          }
-         
+
          if (lastYear && urlLastYear){
-             url = url.replace("last_year="+ urlLastYear, "last_year=" + lastYear)         
+             url = url.replace("last_year="+ urlLastYear, "last_year=" + lastYear)
          } else if (urlLastYear) {
              url = url.replace("&last_year="+ urlLastYear, "");
          } else if (lastYear) {
              tmp = url.indexOf("?") >=0 ? "&last_year="+ lastYear :
-                   "?last_year="+ lastYear;              
+                   "?last_year="+ lastYear;
              url = url + tmp ;
          }
-         
+
          url = url.replace('&&', '&').replace('?&', '?')
          window.location.replace(url);
-         
 
-         
+
+
      }
 
-     
+
     </script>
 
 

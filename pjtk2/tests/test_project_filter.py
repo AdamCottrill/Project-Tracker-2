@@ -140,7 +140,7 @@ def test_project_filter_prj_icontains(projects, partial):
     """
 
     queryset = Project.objects.all()
-    filtered = ProjectFilter(data={"prj_cd": partial}, queryset=queryset).qs
+    filtered = ProjectFilter(data={"prj_cd__like": partial}, queryset=queryset).qs
 
     assert filtered.count() == 1
     obs = {x.prj_cd for x in filtered}
@@ -170,7 +170,7 @@ def test_project_filter_lake_abbrev(projects, lake, expected):
 def test_project_filter_protocol_abbrev(projects):
     """The project filter accepts a list of protocol abbreviations -
     only projects that used protocols that match the supplied
-    abbreviation should be included in the filtered queryset.  """
+    abbreviation should be included in the filtered queryset."""
 
     queryset = Project.objects.all()
     filtered = ProjectFilter(data={"protocol": "BSM"}, queryset=queryset).qs
@@ -184,7 +184,7 @@ def test_project_filter_protocol_abbrev(projects):
 def test_project_filter_project_type_id(projects):
     """The project filter accepts a list of project type id's - only
     projects that are of the specified type should be included in the
-    filtered queryset.  """
+    filtered queryset."""
 
     my_project = Project.objects.get(prj_cd="LHA_SC14_111")
     project_type_id = str(my_project.project_type_id)
@@ -203,7 +203,7 @@ def test_project_filter_project_type_id(projects):
 def test_project_filter_project_type_scope(projects):
     """The project filter accepts a list of project scope
     abbreviations - only projects that are of that of of the specified
-    scope should be included in the filtered queryset.  """
+    scope should be included in the filtered queryset."""
 
     queryset = Project.objects.all()
     filtered = ProjectFilter(data={"scope": "FD"}, queryset=queryset).qs

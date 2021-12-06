@@ -4,6 +4,16 @@
 #
 #    pip-compile --output-file=base.txt base.in
 #
+certifi==2021.10.8
+    # via requests
+charset-normalizer==2.0.9
+    # via requests
+coreapi==2.3.3
+    # via drf-yasg
+coreschema==0.0.4
+    # via
+    #   coreapi
+    #   drf-yasg
 django-crispy-forms==1.11.0
     # via -r base.in
 django-filter==2.4.0
@@ -25,21 +35,52 @@ django==2.2.18
     #   django-password-reset
     #   django-taggit
     #   djangorestframework
+    #   drf-yasg
 djangorestframework==3.12.2
+    # via
+    #   -r base.in
+    #   drf-yasg
+drf-yasg==1.20.0
     # via -r base.in
-et-xmlfile==1.0.1
+et-xmlfile==1.1.0
     # via openpyxl
+idna==3.3
+    # via requests
+inflection==0.5.1
+    # via drf-yasg
+itypes==1.2.0
+    # via coreapi
 jdcal==1.4.1
     # via openpyxl
+jinja2==3.0.3
+    # via coreschema
 markdown2==2.4.0
     # via -r base.in
+markupsafe==2.0.1
+    # via jinja2
 openpyxl==3.0.6
     # via -r base.in
+packaging==21.3
+    # via drf-yasg
 pillow==8.1.0
     # via -r base.in
 psycopg2==2.8.6
     # via -r base.in
-pytz==2021.1
+pyparsing==3.0.6
+    # via packaging
+pytz==2021.3
     # via django
-sqlparse==0.4.1
+requests==2.26.0
+    # via coreapi
+ruamel.yaml.clib==0.2.6
+    # via ruamel.yaml
+ruamel.yaml==0.17.17
+    # via drf-yasg
+sqlparse==0.4.2
     # via django
+uritemplate==4.1.1
+    # via
+    #   coreapi
+    #   drf-yasg
+urllib3==1.26.7
+    # via requests

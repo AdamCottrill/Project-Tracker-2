@@ -149,6 +149,7 @@ THIRDPARTY_APPS = (
     "djgeojson",
     "tickets",
     "common",
+    "drf_yasg",
 )
 
 MY_APPS = (

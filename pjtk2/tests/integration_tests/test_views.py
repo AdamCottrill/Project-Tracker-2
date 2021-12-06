@@ -2040,7 +2040,7 @@ class ProjectQuickSearch(TestCase):
         self.assertTrue(login)
 
         url = reverse("project_search")
-        response = self.client.get(url, {"prj_cd": "LHA"})
+        response = self.client.get(url, {"prj_cd__like": "LHA"})
         self.assertEqual(response.status_code, 200)
 
         self.assertTemplateUsed("pjtk2/ProjectListSimple.html")
@@ -2071,7 +2071,7 @@ class ProjectQuickSearch(TestCase):
         self.assertTrue(login)
 
         url = reverse("project_search")
-        response = self.client.get(url, {"prj_cd": "lha"})
+        response = self.client.get(url, {"prj_cd__like": "lha"})
         self.assertEqual(response.status_code, 200)
 
         self.assertTemplateUsed("pjtk2/ProjectListSimple.html")
@@ -2117,7 +2117,7 @@ class ProjectQuickSearch(TestCase):
         self.assertTrue(login)
 
         url = reverse("project_search")
-        response = self.client.get(url, {"prj_cd": "000"})
+        response = self.client.get(url, {"prj_cd__like": "000"})
         self.assertEqual(response.status_code, 200)
 
         self.assertTemplateUsed("pjtk2/ProjectListSimple.html")

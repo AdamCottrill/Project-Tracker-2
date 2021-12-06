@@ -1,6 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from pjtk2.models import Project, ProjectType, SamplePoint, ProjectPolygon, ProjectImage
+from pjtk2.models import (
+    Project,
+    ProjectType,
+    SamplePoint,
+    ProjectPolygon,
+    ProjectImage,
+    Report,
+)
 
 User = get_user_model()
 
@@ -68,6 +75,46 @@ class ProjectImageSerializer(serializers.ModelSerializer):
             "caption",
             # "aria-text",
             "report",
+        )
+
+
+class ReportSerializer(serializers.ModelSerializer):
+    """serialize our report objects so they can be downloaded by client
+    applications."""
+
+    prj_cd = serializers.CharField(read_only=True)
+    report_type = serializers.CharField(read_only=True)
+    report_path = serializers.CharField(read_only=True)
+    uploaded_by = serializers.CharField(read_only=True, source="_uploaded_by")
+
+    class Meta:
+        model = Report
+        fields = (
+            "prj_cd",
+            "report_type",
+            "current",
+            "report_path",
+            "uploaded_on",
+            "uploaded_by",
+        )
+
+
+class AssociatedFileSerializer(serializers.ModelSerializer):
+    """serialize our associated objects so they can be downloaded by client
+    applications."""
+
+    prj_cd = serializers.CharField(read_only=True)
+    file_path = serializers.CharField(read_only=True)
+    uploaded_by = serializers.CharField(read_only=True, source="_uploaded_by")
+
+    class Meta:
+        model = Report
+        fields = (
+            "prj_cd",
+            "current",
+            "file_path",
+            "uploaded_on",
+            "uploaded_by",
         )
 
 
