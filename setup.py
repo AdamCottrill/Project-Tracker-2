@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name="pjtk2",
-    version="0.0.4b",
+    version="2021.12.06",
     packages=find_packages(),
     include_package_data=True,
     license="MIT License",  # example license
