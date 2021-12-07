@@ -178,15 +178,19 @@ def points_roi(request, how="contained"):
 
     if how == "points_in":
         # return all of the sample points in the roi
-        sample_points = SamplePoint.objects.filter(geom__within=roi).order_by(
-            "-project__year", "label"
+        sample_points = (
+            SamplePoint.objects.select_related("project", "project__project_type")
+            .filter(geom__within=roi)
+            .order_by()
         )
 
     elif how == "contained":
         # return only points from projects that are completely contained within the roi
-        sample_points = SamplePoint.objects.filter(
-            project__multipoints__geom__within=roi
-        ).order_by("-project__year", "label")
+        sample_points = (
+            SamplePoint.objects.select_related("project", "project__project_type")
+            .filter(project__multipoints__geom__within=roi)
+            .order_by()
+        )
     else:
         project_ids = (
             Project.objects.filter(multipoints__geom__intersects=roi)
@@ -194,9 +198,11 @@ def points_roi(request, how="contained"):
             .values_list("id")
             .distinct()
         )
-        sample_points = SamplePoint.objects.filter(
-            project__pk__in=project_ids
-        ).order_by("-project__year", "label")
+        sample_points = (
+            SamplePoint.objects.select_related("project", "project__project_type")
+            .filter(project__pk__in=project_ids)
+            .order_by()
+        )
         # If we want to clip our points to just those in the region, do it here:
         # sample_points = sample_points.filter(geom__within=roi)
 
@@ -255,6 +261,18 @@ def points_roi(request, how="contained"):
     return Response(serializer.data)
 
 
+class SamplePointListView(ListAPIView):
+    """A read-only endpoint to return sampling points."""
+
+    serializer_class = ProjectPointSerializer
+    permission_classes = [ReadOnly]
+    pagination_class = LargeResultsSetPagination
+    filterset_class = SamplePointFilter
+    queryset = SamplePoint.objects.select_related(
+        "project", "project__project_type"
+    ).all()
+
+
 class ReportListView(ListAPIView):
     """A read-only endpoint to return currently available reports."""
 
@@ -269,11 +287,13 @@ class ReportListView(ListAPIView):
             Report.objects.filter(current=True, report_path__isnull=False)
             .annotate(
                 prj_cd=F("projectreport__project__prj_cd"),
+                prj_nm=F("projectreport__project__prj_nm"),
                 report_type=F("projectreport__milestone__label_abbrev"),
                 _uploaded_by=F("uploaded_by__username"),
             )
             .values(
                 "prj_cd",
+                "prj_nm",
                 "report_type",
                 "current",
                 "report_path",
@@ -299,10 +319,12 @@ class AssociatedFilesListView(ListAPIView):
             AssociatedFile.objects.filter(current=True)
             .annotate(
                 prj_cd=F("project__prj_cd"),
+                prj_nm=F("project__prj_nm"),
                 _uploaded_by=F("uploaded_by__username"),
             )
             .values(
                 "prj_cd",
+                "prj_nm",
                 "current",
                 "file_path",
                 "uploaded_on",

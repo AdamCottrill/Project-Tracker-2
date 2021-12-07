@@ -16,6 +16,7 @@ from .views import (
     ProjectPolygonViewSet,
     ProjectAbstractViewSet,
     points_roi,
+    SamplePointListView,
     ReportListView,
     AssociatedFilesListView,
 )
@@ -68,6 +69,11 @@ urlpatterns = [
         points_roi,
         {"how": "overlapping"},
         name="get_project_points_overlapping_roi",
+    ),
+    url(
+        r"^sample_points/",
+        SamplePointListView.as_view(),
+        name="sample_point_list",
     ),
     url(
         r"^reports/",

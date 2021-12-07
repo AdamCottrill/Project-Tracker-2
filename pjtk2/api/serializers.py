@@ -83,6 +83,7 @@ class ReportSerializer(serializers.ModelSerializer):
     applications."""
 
     prj_cd = serializers.CharField(read_only=True)
+    prj_nm = serializers.CharField(read_only=True)
     report_type = serializers.CharField(read_only=True)
     report_path = serializers.CharField(read_only=True)
     uploaded_by = serializers.CharField(read_only=True, source="_uploaded_by")
@@ -91,6 +92,7 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Report
         fields = (
             "prj_cd",
+            "prj_nm",
             "report_type",
             "current",
             "report_path",
@@ -104,6 +106,7 @@ class AssociatedFileSerializer(serializers.ModelSerializer):
     applications."""
 
     prj_cd = serializers.CharField(read_only=True)
+    prj_nm = serializers.CharField(read_only=True)
     file_path = serializers.CharField(read_only=True)
     uploaded_by = serializers.CharField(read_only=True, source="_uploaded_by")
 
@@ -111,6 +114,7 @@ class AssociatedFileSerializer(serializers.ModelSerializer):
         model = Report
         fields = (
             "prj_cd",
+            "prj_nm",
             "current",
             "file_path",
             "uploaded_on",
@@ -154,22 +158,16 @@ class ProjectAbstractSerializer(serializers.HyperlinkedModelSerializer):
         return "{} {}".format(obj.prj_ldr.first_name, obj.prj_ldr.last_name)
 
 
-class ProjectPointSerializer(serializers.HyperlinkedModelSerializer):
-
-    # project = serializers.HyperlinkedIdentityField(
-    #    view_name='api:project-detail',
-    #    lookup_field='project.slug',
-    #    read_only=True)
+class ProjectPointSerializer(serializers.ModelSerializer):
 
     prj_cd = serializers.CharField(source="project.prj_cd", read_only=True)
     project_type = serializers.CharField(source="project.project_type", read_only=True)
 
     class Meta:
         model = SamplePoint
-        fields = (  #'project',
+        fields = (
             "prj_cd",
             "label",
-            # "geom",
             "dd_lat",
             "dd_lon",
             "popup_text",

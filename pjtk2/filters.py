@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.contrib.gis.geos import GEOSGeometry
 import django_filters
 
 from pjtk2.models import Project, ProjectType, SamplePoint, Report, AssociatedFile
@@ -7,6 +8,10 @@ from common.models import Lake
 
 # from crispy_forms.helper import FormHelper
 # from crispy_forms.layout import Layout, Field, Submit
+
+
+class GeomFilter(django_filters.CharFilter):
+    pass
 
 
 class ValueInFilter(django_filters.BaseInFilter, django_filters.CharFilter):
@@ -28,8 +33,81 @@ def get_year_choices():
     return years
 
 
-class ProjectFilter(django_filters.FilterSet):
+class GeoFilterSet(django_filters.FilterSet):
+    """A fitlerset class that includes a filter_roi method"""
+
+    def filter_roi(self, queryset, name, value):
+        """A custom filter for our region of interest, only return objects
+        that have all of there sampling points in the region of interest.
+        The region of interest is contained in the 'value' parameter and must be string
+        that can be converted to a GEOS geometry, typically wkt or geojson.
+        """
+
+        if not value:
+            return queryset
+        try:
+            roi = GEOSGeometry(value, srid=4326)
+            geofilter = {}
+            geofilter[name] = roi
+            queryset = queryset.filter(**geofilter)
+        except ValueError:
+            pass
+        return queryset
+
+    def filter_point(self, queryset, name, value):
+        """A custom filter for points.  value must be a string that can be
+        converted to a geospoint objects, typically geojson or well
+        known text. Optionally followed by a radius in meters to buffer the
+        point by. If no radius is provided, a value of 5000 m will be
+        assumed.
+
+        POINT(-81.5 45.5);5000
+
+        """
+
+        utm_srid = 26917
+
+        if not value:
+            return queryset
+        try:
+            if "[" in value:
+                geom, radius = value.split("[")
+                radius = int(radius.replace("]", ""))
+            else:
+                geom = value
+                radius = 5000
+
+            print("radius={}".format(radius))
+
+            pt = GEOSGeometry(geom, srid=4326)
+            pt.transform(utm_srid)
+            roi = pt.buffer(radius)
+            roi.transform(4326)
+            geofilter = {}
+            geofilter[name] = roi
+
+            queryset = queryset.filter(**geofilter)
+        except ValueError:
+            pass
+        return queryset
+
+
+class ProjectFilter(GeoFilterSet):
     """A filter for project lists"""
+
+    within__roi = GeomFilter(
+        field_name="multipoints__geom__within", method="filter_roi"
+    )
+    intersects__roi = GeomFilter(
+        field_name="multipoints__geom__intersects", method="filter_roi"
+    )
+
+    within__buffered_point = GeomFilter(
+        field_name="multipoints__geom__within", method="filter_point"
+    )
+    intersects__buffered_point = GeomFilter(
+        field_name="multipoints__geom__intersects", method="filter_point"
+    )
 
     project_type = ValueInFilter(field_name="project_type__id", lookup_expr="in")
     scope = ValueInFilter(field_name="project_type__scope", lookup_expr="in")
@@ -167,8 +245,26 @@ class ProjectFilter(django_filters.FilterSet):
 #
 
 
-class SamplePointFilter(django_filters.FilterSet):
+class SamplePointFilter(GeoFilterSet):
     """A filter for sample points lists"""
+
+    within__roi = GeomFilter(
+        field_name="geom__within",
+        method="filter_roi",
+    )
+    intersects__roi = GeomFilter(
+        field_name="geom__intersects",
+        method="filter_roi",
+    )
+
+    within__buffered_point = GeomFilter(
+        field_name="project__multipoints__geom__within",
+        method="filter_point",
+    )
+    intersects__buffered_point = GeomFilter(
+        field_name="geom__intersects",
+        method="filter_point",
+    )
 
     project_type = django_filters.ModelMultipleChoiceFilter(
         "project__project_type",
@@ -263,8 +359,26 @@ class SamplePointFilter(django_filters.FilterSet):
         fields = ["project__year", "project__project_type", "project__lake__abbrev"]
 
 
-class ReportFilter(django_filters.FilterSet):
+class ReportFilter(GeoFilterSet):
     """A filter for our ReportFiles"""
+
+    within__roi = GeomFilter(
+        field_name="projectreport__project__multipoints__geom__within",
+        method="filter_roi",
+    )
+    intersects__roi = GeomFilter(
+        field_name="projectreport__project__multipoints__geom__intersects",
+        method="filter_roi",
+    )
+
+    within__buffered_point = GeomFilter(
+        field_name="projectreport__project__multipoints__geom__within",
+        method="filter_point",
+    )
+    intersects__buffered_point = GeomFilter(
+        field_name="projectreport__project__multipoints__geom__intersects",
+        method="filter_point",
+    )
 
     report_type = ValueInFilter(field_name="projectreport__milestone__label_abbrev")
     report_type__not = ValueInFilter(
@@ -385,8 +499,26 @@ class ReportFilter(django_filters.FilterSet):
         ]
 
 
-class AssociatedFileFilter(django_filters.FilterSet):
+class AssociatedFileFilter(GeoFilterSet):
     """A filter for our AssociatedFiles"""
+
+    within__roi = GeomFilter(
+        field_name="project__multipoints__geom__within",
+        method="filter_roi",
+    )
+    intersects__roi = GeomFilter(
+        field_name="project__multipoints__geom__intersects",
+        method="filter_roi",
+    )
+
+    within__buffered_point = GeomFilter(
+        field_name="project__multipoints__geom__within",
+        method="filter_point",
+    )
+    intersects__buffered_point = GeomFilter(
+        field_name="project__multipoints__geom__intersects",
+        method="filter_point",
+    )
 
     project_type = ValueInFilter(
         field_name="project__project_type__id", lookup_expr="in"
