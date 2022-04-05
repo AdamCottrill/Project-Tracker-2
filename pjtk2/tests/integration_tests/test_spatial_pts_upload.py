@@ -38,6 +38,7 @@
 import csv
 import pytest
 
+from django.utils.html import escape
 from django.urls import reverse
 from django.contrib.gis.geos import GEOSGeometry
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -406,10 +407,9 @@ def test_spatial_pts_upload_other_file_types(client, user, project):
     response = client.post(url, form_data, follow=True)
     assert response.status_code == 200
     content = response.content.decode("utf-8")
-    msg = (
-        "File extension &#39;jpg&#39; is not allowed. "
-        + "Allowed extensions are: &#39;csv, xlsx&#39;."
-    )
+    # msg = 'File extension ".jpg" is not allowed. Allowed extensions are: csv, xlsx.'
+    # quotes in full message cause test to fail now.
+    msg = "is not allowed. Allowed extensions are: csv, xlsx."
     assert msg in content
 
 

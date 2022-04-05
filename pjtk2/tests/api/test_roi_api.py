@@ -146,16 +146,18 @@ class ProjectAPITest(APITestCase):
         include points outside of the roi.
         """
 
-        url = reverse("api:get_points_in_roi")
+        slug = self.project1.slug
         data = {"roi": self.roi.geojson}
+
+        url = reverse("api:get_points_in_roi")
         response = self.client.post(url, data)
-        request = self.factory.get(url)
 
         # get data from db using the same sort - order
-        slug = self.project1.slug
         points = SamplePoint.objects.filter(
             Q(project__slug=slug) | Q(label__in=["some-0", "some-1"])
         ).order_by("-project__year", "label")
+
+        request = self.factory.get(url)
         serializer = ProjectPointSerializer(
             points, many=True, context={"request": request}
         )

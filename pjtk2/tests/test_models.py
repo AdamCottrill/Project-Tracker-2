@@ -1145,7 +1145,10 @@ class TestModelSisters(TestCase):
         sisters2 = self.project2.get_sisters(False)
 
         self.assertQuerysetEqual(
-            sisters1, [self.project1.prj_cd, self.project2.prj_cd], lambda a: a.prj_cd
+            sisters1,
+            [self.project1.prj_cd, self.project2.prj_cd],
+            lambda a: a.prj_cd,
+            ordered=False,
         )
 
         self.assertQuerysetEqual(
@@ -1299,7 +1302,10 @@ class TestProjectTagging(TestCase):
         projects = Project.objects.filter(tags__name__in=["project12"])
         self.assertEqual(projects.count(), 2)
         self.assertQuerysetEqual(
-            projects, [self.project1.prj_cd, self.project2.prj_cd], lambda a: a.prj_cd
+            projects,
+            [self.project1.prj_cd, self.project2.prj_cd],
+            lambda a: a.prj_cd,
+            ordered=False,
         )
 
         projects = Project.objects.filter(tags__name__in=["project1"])

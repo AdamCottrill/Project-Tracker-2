@@ -1,10 +1,8 @@
-import django_settings
-
 import csv
 import os
 
-from pjtk2.models import ProjectType, ProjectProtocol
-
+import django_settings
+from pjtk2.models import ProjectProtocol, ProjectType
 
 HERE = "c:/Users/COTTRILLAD/1work/Python/djcode/pjtk2/pjtk2/utils"
 
@@ -94,7 +92,6 @@ with open(figure_catalog, newline="") as csvfile:
 # code, create the geos Point object, and create the sample points.
 
 from django.contrib.gis.geos import GEOSGeometry
-
 
 src_file = (
     "C:/Users/COTTRILLAD/1work/ProjectMgt/Annual_Project_Report/"
@@ -398,12 +395,10 @@ for project in projects:
     project.protocol = protocol
     project.save()
 
-from pjtk2.models import Project
-from django.db.models import Count, F
 from django.contrib.postgres.search import SearchQuery, SearchVector
-
 from django.db import connection
-
+from django.db.models import Count, F
+from pjtk2.models import Project
 
 term = "maxilla"
 query_count0 = len(connection.queries)
@@ -519,9 +514,10 @@ for item in abstracts:
 print("done!")
 
 
+import csv
+
 # now to get the lake erie and lake ontario creel points:
 import django_settings
-import csv
 from django.contrib.gis.geos import GEOSGeometry
 from pjtk2.models import Project, SamplePoint
 
@@ -591,14 +587,14 @@ print("Done!")
 
 
 import sys
-from django.core import serializers
 
+from django.core import serializers
 from pjtk2.models import (
-    Milestone,
-    ProjectType,
-    ProjectProtocol,
     Database,
     FundingSource,
+    Milestone,
+    ProjectProtocol,
+    ProjectType,
 )
 
 
@@ -639,10 +635,9 @@ original_data_json = serializers.serialize("json", original_data)
 # I need all of the project milestones from my completed projects in the last 5 years,
 # including the project lead, and proejct type
 import django_settings
-from pjtk2.models import Project, ProjectType, Milestone, ProjectMilestones
 from django.contrib.auth import get_user_model
 from django.db import connection
-
+from pjtk2.models import Milestone, Project, ProjectMilestones, ProjectType
 
 User = get_user_model()
 

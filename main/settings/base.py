@@ -147,7 +147,7 @@ THIRDPARTY_APPS = (
     "taggit",
     "leaflet",
     "djgeojson",
-    "tickets",
+    #    "tickets",
     "common",
     "drf_yasg",
 )
@@ -273,7 +273,7 @@ LEAFLET_CONFIG = {
 VIRTUAL_ENV = os.environ["VIRTUAL_ENV"]
 OSGEO_VENV = os.path.join(VIRTUAL_ENV, "Lib/site-packages/osgeo")
 GEOS_LIBRARY_PATH = os.path.join(OSGEO_VENV, "geos_c.dll")
-GDAL_LIBRARY_PATH = os.path.join(OSGEO_VENV, "gdal302.dll")
+GDAL_LIBRARY_PATH = os.path.join(OSGEO_VENV, "gdal304.dll")
 PROJ_LIB = os.path.join(OSGEO_VENV, "data/proj")
 os.environ["PROJ_LIB"] = PROJ_LIB
 os.environ["PATH"] += os.pathsep + str(OSGEO_VENV)

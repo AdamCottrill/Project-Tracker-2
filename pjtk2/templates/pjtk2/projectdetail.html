@@ -307,7 +307,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="main_map" style="width: 600px; height: 600px;"></div>
-                    {% if edit %}                    
+                    {% if edit %}
                         <a class="btn btn-info btn-xs pull-right" style="margin-top:5px;" href="{% url 'spatial_point_upload' project.slug %}">
                             Upload Spatial Points
                         </a>
@@ -609,7 +609,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.js" integrity="sha256-fNoRrwkP2GuYPbNSJmMJOCyfRB2DhPQe0rGTgzRsyso=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.6.0/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous" />
-    
+
     <script type="text/javascript">
 
 
@@ -631,7 +631,7 @@
                  url:"{% url 'api:project_points' slug=project.slug %}",
                  type: "GET",
                  success: function(data) {
-                     
+
                      var markerArray = [];
                      data.forEach(function(d){
                          markerArray.push(L.circleMarker([d.dd_lat, d.dd_lon], markerOptions)
@@ -655,12 +655,14 @@
          function leafletBounds(bbox){
              let pt1 = bbox.coordinates[0][0]
              let pt2 = bbox.coordinates[0][2]
-             return [
-                 [pt1[1], pt1[0]],
-                 [pt2[1], pt2[0]],                         
-             ]
+
+             pt1.sort((a,b)=> b - a)
+             pt2.sort((a,b)=> b - a)
+             return [pt1, pt2]
          }
-         
+
+
+
          //var  my_map = new L.map('main_map').setView([45,-82], 7);
          let my_map = new L.map('main_map', {
              zoomSnap: 0.1
@@ -671,7 +673,7 @@
              attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
          }).addTo(my_map);
 
-         
+
          add_project_points(my_map);
 
 

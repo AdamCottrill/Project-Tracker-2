@@ -1,6 +1,6 @@
 from django.conf import settings
-from django.conf.urls import url, include
-from django.urls import path, re_path
+
+from django.urls import include, path, re_path
 from rest_framework import routers
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.permissions import AllowAny
@@ -39,54 +39,49 @@ router.register(
 )
 
 urlpatterns = [
-    #    url(
-    #        r"^project_abstracts/",
-    #        ProjectAbstractViewSet.as_view({"get": "list"}),
-    #        name="project_abstracts",
-    #    ),
-    url(
+    re_path(
         r"^project_points/" + PRJ_CD_REGEX,
         ProjectPointViewSet.as_view({"get": "list"}),
         name="project_points",
     ),
-    url(
+    re_path(
         r"^project_polygon/" + PRJ_CD_REGEX,
         ProjectPolygonViewSet.as_view({"get": "list"}),
         name="project_polygon",
     ),
     # just the points - regardless of project
-    url(r"points_in_roi/", points_roi, {"how": "points_in"}, name="get_points_in_roi"),
+    path("points_in_roi/", points_roi, {"how": "points_in"}, name="get_points_in_roi"),
     # points for projects were ALL points are in roi
-    url(
-        r"project_points_contained_in_roi/",
+    path(
+        "project_points_contained_in_roi/",
         points_roi,
         {"how": "contained"},
         name="get_project_points_contained_in_roi",
     ),
     # points for projects were SOME points are in roi
-    url(
-        r"project_points_overlapping_roi/",
+    path(
+        "project_points_overlapping_roi/",
         points_roi,
         {"how": "overlapping"},
         name="get_project_points_overlapping_roi",
     ),
-    url(
-        r"^sample_points/",
+    path(
+        "sample_points/",
         SamplePointListView.as_view(),
         name="sample_point_list",
     ),
-    url(
-        r"^reports/",
+    path(
+        "reports/",
         ReportListView.as_view(),
         name="reports_list",
     ),
-    url(
-        r"^associated_files/",
+    path(
+        "associated_files/",
         AssociatedFilesListView.as_view(),
         name="associated_files_list",
     ),
-    url(r"^", include(router.urls)),
-    url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
 
 

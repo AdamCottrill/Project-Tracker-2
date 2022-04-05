@@ -58,6 +58,7 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
             "prj_date1",
             "project_type",
             "prj_ldr",
+            "abstract",
             "comment",
             "sample_points",
         )

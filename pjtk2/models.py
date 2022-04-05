@@ -188,6 +188,8 @@ class Milestone(models.Model):
 
     """
 
+    id = models.AutoField(primary_key=True)
+
     # (database, display)
     MILESTONE_CHOICES = {
         ("Core", "core"),
@@ -224,6 +226,8 @@ class ProjectType(models.Model):
 
     """
 
+    id = models.AutoField(primary_key=True)
+
     PROJECT_SCOPE_CHOICES = {
         ("FD", "Fishery Dependent"),
         ("FI", "Fishery Independent"),
@@ -248,6 +252,8 @@ class ProjectProtocol(models.Model):
 
     """
 
+    id = models.AutoField(primary_key=True)
+
     project_type = models.ForeignKey(
         "ProjectType", related_name="protocols", on_delete=models.CASCADE
     )
@@ -269,6 +275,8 @@ class Database(models.Model):
     A lookup table to hole list of master databases.
     """
 
+    id = models.AutoField(primary_key=True)
+
     # thes should be unique!!
     master_database = models.CharField(max_length=250)
     path = models.CharField(max_length=250)
@@ -285,6 +293,8 @@ class FundingSource(models.Model):
     """
     A lookup table to hold the names of the different funding sources
     """
+
+    id = models.AutoField(primary_key=True)
 
     name = models.CharField(max_length=150, unique=True, blank=False)
     abbrev = models.CharField(max_length=25, unique=True, blank=False)
@@ -306,6 +316,8 @@ class ProjectFunding(models.Model):
     project.
 
     """
+
+    id = models.AutoField(primary_key=True)
 
     project = models.ForeignKey(
         "Project", related_name="funding_sources", on_delete=models.CASCADE
@@ -359,6 +371,8 @@ class Project(models.Model):
         default="submitted",
         db_index=True,
     )
+
+    id = models.AutoField(primary_key=True)
 
     active = models.BooleanField(default=True)
     cancelled = models.BooleanField(default=False)
@@ -1229,6 +1243,8 @@ class SamplePoint(models.Model):
     can have different meaning for different projects.
     """
 
+    id = models.AutoField(primary_key=True)
+
     project = models.ForeignKey("Project", on_delete=models.CASCADE)
     label = models.CharField(max_length=60, null=True, blank=True)
     geom = models.PointField(
@@ -1289,6 +1305,8 @@ class ProjectImage(models.Model):
         val = "project_images/{}/{}".format(self.project.prj_cd, image_path)
         return val
 
+    id = models.AutoField(primary_key=True)
+
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="images"
     )
@@ -1319,6 +1337,8 @@ class ProjectMultiPoints(models.Model):
 
     """
 
+    id = models.AutoField(primary_key=True)
+
     project = models.OneToOneField(
         Project, on_delete=models.CASCADE, related_name="multipoints"
     )
@@ -1342,6 +1362,8 @@ class ProjectPolygon(models.Model):
 
     """
 
+    id = models.AutoField(primary_key=True)
+
     project = models.OneToOneField(
         Project, on_delete=models.CASCADE, related_name="convex_hull"
     )
@@ -1360,6 +1382,8 @@ class ProjectMilestones(models.Model):
     """
     List of reporting requirements for each project
     """
+
+    id = models.AutoField(primary_key=True)
 
     # aka - project milestones
     project = models.ForeignKey(
@@ -1386,6 +1410,8 @@ class Report(models.Model):
     """
     A class for reports.  A single report can be linked to multiple
     entries in Project Reports"""
+
+    id = models.AutoField(primary_key=True)
 
     current = models.BooleanField(default=True)
     projectreport = models.ManyToManyField("ProjectMilestones")
@@ -1414,6 +1440,8 @@ class AssociatedFile(models.Model):
         val = os.path.join("associated_files", self.project.prj_cd, filename)
         return val
 
+    id = models.AutoField(primary_key=True)
+
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     file_path = models.FileField(
         upload_to=get_associated_file_upload_path, max_length=200
@@ -1436,6 +1464,8 @@ class AssociatedFile(models.Model):
 class Bookmark(models.Model):
     """a class to allow users to bookmark and unbookmark their
     favourite projects."""
+
+    id = models.AutoField(primary_key=True)
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(
@@ -1508,6 +1538,8 @@ class ProjectSisters(models.Model):
     """Sister projects have common presentations and summary reports.
     They must be the same project type, and run in the same year."""
 
+    id = models.AutoField(primary_key=True)
+
     project = models.ForeignKey("Project", on_delete=models.CASCADE)
     family = models.ForeignKey("Family", on_delete=models.CASCADE)
 
@@ -1538,6 +1570,8 @@ class Employee(models.Model):
     the hierachical employee-supervisor relationship between users."""
 
     ROLL_CHOICES = {("manager", "Manager"), ("dba", "DBA"), ("employee", "Employee")}
+
+    id = models.AutoField(primary_key=True)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="employee")
     # user = models.ForeignKey(User, unique=True, related_name='employee')
@@ -1572,6 +1606,8 @@ class Message(models.Model):
     """A table to hold all of our messages and which project and milestone
     they were associated with."""
 
+    id = models.AutoField(primary_key=True)
+
     # (database, display)
     distribution_list = models.ManyToManyField(User, through="Messages2Users")
 
@@ -1598,6 +1634,7 @@ class Messages2Users(models.Model):
     """a table to associated messages with users and keep track of when
     they were create and when they were read."""
 
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.ForeignKey(Message, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, db_index=True)

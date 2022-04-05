@@ -249,7 +249,7 @@ class NoticesForm(forms.Form):
         )
 
         # snippet makes sure that Approved appears first
-        self.fields.keyOrder = ["read", "prj_cd", "prj_nm", "msg", "msg_id", "user_id"]
+        self.field_order = ["read", "prj_cd", "prj_nm", "msg", "msg_id", "user_id"]
 
     def save(self, *args, **kwargs):
 
@@ -319,7 +319,7 @@ class ApproveProjectsForm(forms.ModelForm):
         )
 
         # snippet makes sure that Approved appears first
-        self.fields.keyOrder = [
+        self.field_order = [
             "Approved",
             "prj_cd",
             "prj_nm",
@@ -1090,7 +1090,7 @@ class SisterProjectsForm(forms.Form):
         )
 
         # snippet makes sure that Approved appears first
-        self.fields.keyOrder = ["sister", "prj_cd", "prj_nm", "prj_ldr", "slug"]
+        self.field_order = ["sister", "prj_cd", "prj_nm", "prj_ldr", "slug"]
 
     def clean_prj_cd(self):
         """return the original value of prj_cd"""

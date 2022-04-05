@@ -183,7 +183,7 @@ def crud_project(request, slug, action="New"):
             if funding_formset.is_valid():
                 form.save()
                 funding_formset.save()
-                form.tags.set(*tags)
+                form.tags.set(tags=tags)
                 if form_ms:
                     update_milestones(form_ms=form_ms, milestones=milestones)
                 proj = Project.objects.get(slug=form.slug)
