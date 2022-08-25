@@ -17,29 +17,27 @@ from functools import partial, wraps
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-
-from django.forms import inlineformset_factory, formset_factory
+from django.forms import formset_factory, inlineformset_factory
+from django.forms.widgets import CheckboxInput
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 
 User = get_user_model()
 
-from ..models import Project, ProjectFunding, AssociatedFile, Report
-
 from ..forms import (
+    AssociatedFileUploadForm,
     ProjectForm,
     ProjectFundingForm,
-    AssociatedFileUploadForm,
     ReportUploadForm,
     SpatialPointUploadForm,
 )
-
+from ..models import AssociatedFile, Project, ProjectFunding, Report
 from ..utils.helpers import (
+    can_edit,
     get_assignments_with_paths,
+    get_or_none,
     is_dba,
     is_manager,
-    can_edit,
-    get_or_none,
     update_milestones,
 )
 
@@ -150,7 +148,11 @@ def crud_project(request, slug, action="New"):
         instance.owner = user
 
     ProjectFundingFormset = inlineformset_factory(
-        Project, ProjectFunding, form=ProjectFundingForm, extra=2
+        Project,
+        ProjectFunding,
+        form=ProjectFundingForm,
+        widgets={"Delete": CheckboxInput(attrs={"aria-label": "foo"})},
+        extra=2,
     )
 
     if request.method == "POST":

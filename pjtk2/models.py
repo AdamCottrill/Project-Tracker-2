@@ -4,29 +4,24 @@
 
 # from collections import OrderedDict
 import collections
-
-from django.conf import settings
-from django.contrib.auth import get_user_model
-
-from django.contrib.gis.db.models import Collect, Union
-from django.contrib.gis.geos import MultiPoint
-from django.contrib.postgres.search import SearchVectorField, SearchVector
-from django.contrib.postgres.indexes import GinIndex
-
-from django.urls import reverse
-from django.db.models.signals import pre_save, post_save
-from django.dispatch import receiver
-from django.template.defaultfilters import slugify
-from django.contrib.gis.db import models
-from taggit.managers import TaggableManager
-
-from markdown2 import markdown
-
-from common.models import Lake
-
 import datetime
 import os
+
 import pytz
+from common.models import Lake
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.gis.db import models
+from django.contrib.gis.db.models import Collect, Union
+from django.contrib.gis.geos import MultiPoint
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchVectorField
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
+from django.template.defaultfilters import slugify
+from django.urls import reverse
+from markdown2 import markdown
+from taggit.managers import TaggableManager
 
 from .utils.helpers import get_supervisors, replace_links, strip_carriage_returns
 

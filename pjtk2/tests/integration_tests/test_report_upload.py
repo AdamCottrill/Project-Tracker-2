@@ -7,18 +7,14 @@ import os
 import re
 from io import StringIO
 
+import pytest
 from django.conf import settings
-from django.urls import reverse
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save
 from django.test import TestCase
+from django.urls import reverse
 from django_webtest import WebTest
-from webtest import Upload
-
 from pjtk2.models import ProjectMilestones
 from pjtk2.tests.factories import *
-
-import pytest
-
 
 UPLOAD_TO = "milestone_reports"
 
@@ -212,7 +208,7 @@ class BasicReportUploadTestCase(WebTest):
 
 
 class TestActualFileUpload(TestCase):
-    """ These tests use the django test client to upload reports
+    """These tests use the django test client to upload reports
     associated with different reporting requirements."""
 
     def setUp(self):

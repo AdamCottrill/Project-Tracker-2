@@ -41,8 +41,7 @@ from pjtk2.tests.pytest_fixtures import manager
 
 @pytest.fixture()
 def employee(db, manager):
-    """return a normal employee named homer
-    """
+    """return a normal employee named homer"""
     password = "Abcd1234"
     myuser = UserFactory(
         username="hsimpson", first_name="Homer", last_name="Simpson", password=password
@@ -53,8 +52,7 @@ def employee(db, manager):
 
 @pytest.fixture()
 def dba(db):
-    """return a normal employee named homer
-    """
+    """return a normal employee named homer"""
     password = "Abcd1234"
     myuser = UserFactory(
         username="bgumble", first_name="Barney", last_name="Gumble", password=password
@@ -224,8 +222,7 @@ def test_owner_widget_visibility_edit_project_user(client, employee, project):
 
 @pytest.mark.django_db
 def test_owner_widget_visibility_edit_project_dba(client, dba, project):
-    """When a dba edits and existing project they should see the project owner widget.
-    """
+    """When a dba edits and existing project they should see the project owner widget."""
 
     login = client.login(username=dba.username, password="Abcd1234")
     assert login is True
@@ -257,3 +254,52 @@ def test_owner_widget_visibility_edit_project_manager(client, manager, project):
 
     html = '<select name="owner" class="form-control " required id="id_owner">'
     assert html in content
+
+
+@pytest.mark.adoa
+@pytest.mark.django_db
+def test_tags_aria_label(client, employee):
+    """
+    The project detail form has a TagField that need to have a
+    aria-label. It's value should be set to keywords.
+    """
+
+    login = client.login(username=employee.username, password="Abcd1234")
+    assert login is True
+
+    response = client.get(reverse("NewProject"), follow=True)
+    assert response.status_code == 200
+    content = response.content.decode("utf-8")
+
+    html = 'aria-label="keywords"'
+
+    assert html in content
+
+
+elements = [
+    '<label class="sr-only" for="id_funding_sources-0-DELETE">Delete</label>',
+    'aria-label="project-abstract"',
+    'aria-label="project-comments-remarks"',
+    'aria-label="project-risks"',
+]
+
+
+@pytest.mark.adoa
+@pytest.mark.django_db
+@pytest.mark.parametrize("element", elements)
+def test_aria_labels(client, employee, element):
+    """The project detail form has a number of aria-labels that were
+    missing from the orignal tempate, and are required to meet adoa
+    compliance.  THis test verifies that they are rendered in the html
+    repsonse.
+
+    """
+
+    login = client.login(username=employee.username, password="Abcd1234")
+    assert login is True
+
+    response = client.get(reverse("NewProject"), follow=True)
+    assert response.status_code == 200
+    content = response.content.decode("utf-8")
+
+    assert element in content
