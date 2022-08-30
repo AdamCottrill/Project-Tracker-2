@@ -57,7 +57,7 @@
 
 {% block content %}
 
-<div class="container" >
+<div class="container p-4" >
 
     <h2>{{ project.prj_nm  }}</h2>
     <br />
@@ -70,11 +70,11 @@
             {% endif %}
 
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Project Details</h3>
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Project Details</h3>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
 
                     <table class="table">
 
@@ -115,11 +115,11 @@
             </div>
 
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Staffing</h3>
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Staffing</h3>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
 
                     <table class="table">
 
@@ -178,11 +178,11 @@
             {% if project.funding_sources.all %}
 
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Funding</h3>
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Funding</h3>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
 
                     <table class="table">
                         <thead>
@@ -244,8 +244,8 @@
 
             <p><strong>Project Abstract (public facing):</strong></p>
 
-            <div class="panel panel-default" >
-                <div class="panel-body" >
+            <div class="card card-default mb-3" >
+                <div class="card-body" >
                     {% if project.abstract_html %}
                         <p>{{ project.abstract_html|safe  }} </p>
                     {% else %}
@@ -257,8 +257,8 @@
             {% if user.is_authenticated %}
                 <p><strong>Comments or Remarks:</strong></p>
 
-                <div class="panel panel-default" >
-                    <div class="panel-body" >
+                <div class="card card-default mb-3" >
+                    <div class="card-body" >
                         {% if project.comment_html %}
                             <p>{{ project.comment_html|safe  }} </p>
                         {% else %}
@@ -270,8 +270,8 @@
 
             {% if project.risk_html %}
                 <p><strong>Risks:</strong></p>
-                <div class="panel panel-default" >
-                    <div class="panel-body" >
+                <div class="card card-default mb-3" >
+                    <div class="card-body" >
                         <p>{{ project.risk_html|safe  }} </p>
                     </div>
                 </div>
@@ -279,8 +279,8 @@
 
             {% if project.has_sister %}
                 <p><strong>Sister Projects:</strong></p>
-                <div class="panel panel-default" >
-                    <div class="panel-body" >
+                <div class="card card-default mb-3" >
+                    <div class="card-body" >
                         {% for sister in project.get_sisters %}
                             <p><a href="{{ sister.get_absolute_url  }}">{{ sister.prj_cd }}</a>  - {{ sister.prj_nm }}</p>
                         {% endfor%}
@@ -288,9 +288,9 @@
                 </div>
             {% endif %}
 
-            <p><strong>keywords:</strong></p>
-            <div class="panel panel-default" >
-                <div class="panel-body" >
+            <p><strong>Keywords:</strong></p>
+            <div class="card card-default" >
+                <div class="card-body" >
                     {% if project.tags.all %}
                         {% for tag in project.tags.all %}
                             <a href="{% url 'TaggedProjects' tag.name %}">{{ tag.name }}</a>,
@@ -304,8 +304,8 @@
         <div class="col-md-7" >
 
 
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="card card-default">
+                <div class="card-body">
                     <div id="main_map" style="width: 600px; height: 600px;"></div>
                     {% if edit %}
                         <a class="btn btn-info btn-xs pull-right" style="margin-top:5px;" href="{% url 'spatial_point_upload' project.slug %}">
@@ -324,12 +324,12 @@
         </div>
     </div>
     <br />
-    <div class="row" >
-        <div class="well" >
+    <div class="row mb-3" >
+        <div class="card well p-3" >
             <form>
                 <fieldset>
                     <legend> Milestones:</legend>
-
+                    <hr>
                     {% for milestone in milestones %}
                         <input type="checkbox" disabled="disabled"
                                {% if milestone.completed  %}
@@ -351,7 +351,7 @@
             {% if edit %}
             <a href="{% url 'EditProject' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-default">Edit Information</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1">Edit Information</button> </a>
 
             <a href="{% url 'project_add_image' project.slug %}"
                onclick="javascript:window.location=this.href">
@@ -359,32 +359,32 @@
 
             {% if project.is_approved %}
             <a href="{% url 'SisterProjects' project.slug %}">
-                <button type="button" class="btn btn-default">Sister Projects</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1">Sister Projects</button> </a>
             {% else %}
             <a href="#"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-default" disabled="disabled">Sister Projects</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1" disabled="disabled">Sister Projects</button> </a>
             {% endif %}
 
             {% endif  %}
             <a href="{% url 'CopyProject' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-default">Copy Project</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1">Copy Project</button> </a>
             {% if_bookmarked user project %}
             <a href="{% url 'Unbookmark_Project' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-default">Remove Bookmark</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1">Remove Bookmark</button> </a>
             {% else %}
             <a href="{% url 'Bookmark_Project' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-default">Bookmark Project</button> </a>
+                <button type="button" class="btn btn-outline-secondary text-dark mx-1">Bookmark Project</button> </a>
             {% endif_bookmarked %}
 
 
             {% if edit %}
             <a href="{% url 'ReportUpload' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-info">Upload Reports</button> </a>
+                <button type="button" class="btn btn-info mx-1">Upload Reports</button> </a>
             {% endif %}
 
 
@@ -392,7 +392,7 @@
             {% if project.is_complete %}
             <a href="{% url 'reopen_project' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-success">Re-Open Project</button> </a>
+                <button type="button" class="btn btn-success mx-1">Re-Open Project</button> </a>
 
             {% else %}
 
@@ -442,7 +442,7 @@
     <br />
     <h4>Core Reporting Requirements:</h4>
 
-    <div class="panel well" >
+    <div class="card well" >
         {% if Core %}
         <table class="table table-striped">
             {% for report in Core  %}
@@ -460,28 +460,28 @@
                 <td>
                     <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}">
                         <button type="button" class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove"></span>
+                            <span class="fa fa-times"></span>
                         </button>
                     </a>
                 </td>
                 {% else %}
                 <td>
-                    <button type="button" class="btn btn-default btn-sm" disabled="disabled">
-                        <span class="glyphicon glyphicon-remove"></span>
+                    <button type="button" class="btn btn-outline-secondary text-dark btn-sm" disabled="disabled">
+                        <span class="fa fa-times"></span>
                     </button>
                     {% endif %}
 
                     {% else %}
                     {% if report.required %}
                     <td>
-                        <div class="missing"><em> Report not available yet. </em></div>
+                        <div class="missing"><em style="color:#b60000"> Report not available yet. </em></div>
                     </td>
                     {% else %}
                     <td><div class="na"><em> Not requested. </em></div></td>
                     {% endif %}
                     <td>
-                        <button type="button" class="btn btn-default btn-sm" disabled="disabled">
-                            <span class="glyphicon glyphicon-remove"></span>
+                        <button type="button" class="btn btn-outline-secondary text-dark btn-sm" disabled="disabled">
+                            <span class="fa fa-times"></span>
                         </button>
                     </td>
                     {% endif %}
@@ -501,7 +501,7 @@
     <br />
 
     <h4>Additional Reporting Requirements:</h4>
-    <div class="panel well">
+    <div class="card well">
         {% if Custom %}
         <table class="table table-striped">
             {% for report in Custom  %}
@@ -516,14 +516,14 @@
                 <td>
                     <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}">
                         <button type="button" class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove"></span>
+                            <span class="fa fa-times"></span>
                         </button>
                     </a>
                 </td>
                 {% else %}
                 <td>
-                    <button type="button" class="btn btn-default btn-sm" disabled="disabled">
-                        <span class="glyphicon glyphicon-remove"></span>
+                    <button type="button" class="btn btn-outline-secondary text-dark btn-sm" disabled="disabled">
+                        <span class="fa fa-times"></span>
                     </button>
                     {% endif %}
 
@@ -536,8 +536,8 @@
                     <td><div class="na"><em> Not requested. </em></div></td>
                     {% endif %}
                     <td>
-                        <button type="button" class="btn btn-default btn-sm" disabled="disabled">
-                            <span class="glyphicon glyphicon-remove"></span>
+                        <button type="button" class="btn btn-outline-secondary text-dark btn-sm" disabled="disabled">
+                            <span class="fa fa-times"></span>
                         </button>
                     </td>
                     {% endif %}
@@ -561,12 +561,12 @@
         <div class="col-md-2" >
             <a href="{% url 'associated_file_upload' project.slug %}"
                onclick="javascript:window.location=this.href">
-                <button type="button" class="btn btn-primary">Upload Assoc. Files</button> </a>
+                <button type="button" class="btn btn-primary mb-1">Upload Assoc. Files</button> </a>
         </div>
         {% endif %}
 
     </div>
-    <div class="panel well" >
+    <div class="card well" >
 
         {% if project.get_associated_files %}
         <table class="table table-striped">
@@ -579,7 +579,7 @@
                 <td>
                     <a href="{% url 'delete_associated_file' file.id %}">
                         <button type="button" class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove"></span>
+                            <span class="fa fa-times"></span>
                         </button>
                     </a>
                 </td>

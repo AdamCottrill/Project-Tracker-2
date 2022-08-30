@@ -5,18 +5,18 @@
 {% block content %}
 
 <div id="Login">
-  <div class="row top-buffer">
+  <div class="d-flex justify-content-center mt-5">
     <!-- Alignment -->
-    <div class="col-sm-offset-3 col-sm-5">
+    <div class="col-sm-offset-3 col-sm-5 card p-4">
 
       <!-- Form itself -->
       <form method="POST" action="" class="well">
         {% csrf_token %}
         <legend>UGLMU Project Tracker Login</legend>
-
+        <hr/>
         {% if form.errors %}
-        <div class="alert alert-danger">
-          <button type="button" class="close" data-dismiss="alert">×</button>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           <ul>
             {% for error in form.errors.values %}
             <li>{{ error|striptags }}</li>
@@ -43,13 +43,13 @@
           </div>
         </div>
         <br />
-        <div class="row">
+        <div>
           <button type="submit" class="btn btn-primary pull-right">Login</button><br /></p>
-</div>
+        </div>
 
-</form>
-</div>
-</div>
+      </form>
+    </div>
+  </div>
 </div>
 
 

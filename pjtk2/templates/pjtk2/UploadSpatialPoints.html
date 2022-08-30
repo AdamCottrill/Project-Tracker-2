@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container p-4">
 
         <h2>Upload Spatial Points</h2>
 
@@ -11,13 +11,13 @@
         <hr />
 
 
-        <a class="btn btn-info btn-sm" style="margin-bottom:5px"role="button" data-toggle="collapse" href="#additional-information" aria-expanded="false" aria-controls="additional-information">
+        <a class="btn btn-info btn-sm" style="margin-bottom:5px"role="button" data-bs-toggle="collapse" href="#additional-information" aria-expanded="false" aria-controls="additional-information">
             Additional Details....
         </a>
 
         <div class="collapse" id="additional-information">
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-body">
                     
                     
                     <p>
@@ -128,9 +128,9 @@
                     
 
 
-                    <div class="panel panel-default" id="example-spatial-data">
-                        <div class="panel-heading">Example Data</div>
-                        <div class="panel-body">
+                    <div class="card" id="example-spatial-data">
+                        <div class="card-header">Example Data</div>
+                        <div class="card-body">
                             
                             <table id="example-input" class="table">
                                 <thead>
@@ -170,12 +170,12 @@
         </div>
         
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <strong>Spatial Data Upload</strong>
             </div>
             
-            <div class="panel-body">
+            <div class="card-body">
 
 
                 
@@ -194,8 +194,8 @@
                         {{ hidden_field }}
                     {% endfor %}
 
-                    <div class="panel panel-default">
-                        <div class="panel-body">                               
+                    <div class="card">
+                        <div class="card-body">                               
                             
                             <div class="form-group {% if form.points_file.errors %}has-error{% endif %}">
                                 {{ form.points_file.label }}
@@ -223,7 +223,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary pull-right">Upload Points</button>
+                    <div class="mt-3"><button type="submit" class="btn btn-primary pull-right">Upload Points</button></div>
                         
                     </form>
 

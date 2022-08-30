@@ -4,31 +4,31 @@
 
 {% block content %}
 
-<div  class="container">
+<div  class="container p-4">
 
 
     <h2>Images for {{ project.name }}</h2>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             <div  class="row">
                 <div  class="col-md-11" >
-            <h3 class="panel-title">Drag to re-order the images. Double click to edit.</h3>
+            <h3 class="card-title">Drag to re-order the images. Double click to edit.</h3>
                 </div>
                 <div  class="col-md-1" >
-                    <a class="btn btn-success btn-sm pull-right" href="{% url 'project_detail' project.slug %}" role="button">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Done</a>
+                    <a class="btn btn-success pull-right" href="{% url 'project_detail' project.slug %}" role="button">
+                         Done</a>
                 </div>
             </div>
 
         </div>
-        <div class="panel-body">
+        <div class="card-body">
             <ol id="sortable">
                 {% for img in project.images.all %}
                 <li id="image_{{ img.pk }}" class="ui-state-default">
 
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="card mt-3">
+                        <div class="card-body">
                             <a href="{% url 'project_edit_image' img.id %}?next={{ request.path }}">
                                 <div class="row" >
                                     <div  class="col-md-3" >
