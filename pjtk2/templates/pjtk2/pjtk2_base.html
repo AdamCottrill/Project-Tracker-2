@@ -27,19 +27,6 @@
     </head>
 
     <body>
-
-        <!-- <nav class="navbar navbar-default" role="navigation">
-            Brand and toggle get grouped for better mobile display
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{% url 'ProjectList' %}">Project Tracker II</a>
-            </div> -->
-
             <!-- Collect the nav links, forms, and other content for toggling -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid mx-2">
@@ -113,7 +100,7 @@
                     <div class="col-sm-3">
                         <form class="navbar-form navbar-left mx-3 w-100" role="search" action={% url 'project_search' %}>
                             <div class="input-group">
-                                <input type="text" class="form-control" name="prj_cd__like" placeholder="Project Code Quick Search">
+                                <input type="text" class="form-control" name="prj_cd__like" placeholder="Project Code Quick Search" aria-label="Enter project code to search for">
                                 <button class="btn btn-outline-secondary" type="submit" aria-label="Search"><i class="fa fa-search"></i></button>
                             </div><!-- /input-group -->
                         </form>
