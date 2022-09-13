@@ -26,92 +26,92 @@
 </style>
 
 
-<div class="container" >
-    <div class="row well">
+<div class="container p-4"  id="main-content">
+    <div class="d-flex flex-row card p-3">
 
-{% if form.errors %}
-<div class="alert alert-danger">
-    Please fix the errors in the form below.
-    {% for error in form.non_field_errors %}
-    <p class="error">{{ error }}</p>
-    {% endfor %}
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            Please fix the errors in the form below.
+            {% for error in form.non_field_errors %}
+            <p class="error">{{ error }}</p>
+            {% endfor %}
 
-    {% if form.selection.errors %}
-    {% for error in form.selection.errors %}
-    <div class="has-error help-block text-danger">{{ error }}</div>
-    {% endfor %}
-    {% endif %}
+            {% if form.selection.errors %}
+            {% for error in form.selection.errors %}
+            <div class="has-error help-block text-danger">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
 
-</div>
-{% endif %}
+        </div>
+        {% endif %}
 
-
-<form method="post" id="" action="">{% csrf_token %}
-    <div class="col-md-7">
-        {{ form.selection }}
-        <hr />
-        <div class="row" >
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row" >
-                        <div class="col-md-6">
-
-                            <div class="form-group {% if form.first_year.errors %}has-error{% endif %}">
-                                {{ form.first_year.label_tag }}
-                                {{ form.first_year }}
-                                {% if form.first_year.errors %}
-                                {% for error in form.first_year.errors %}
-                                <div class="has-error help-block text-danger">{{ error }}</div>
-                                {% endfor %}
-                                {% endif %}
+        <form method="post" id="" action="">{% csrf_token %}
+            <div>
+                <div class="d-flex p-3">
+                    {{ form.selection }}
+                    <hr />
+                    <div class="mx-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Select Project Type(s):</h4>
+                                <p>(leave blank for all project types)</p>
+                                <div class="form-group {% if form.project_types.errors %}has-error{% endif %}">
+                                    {{ form.project_types.label_tag }}
+                                    {{ form.project_types }}
+                                    {% if form.project_types.errors %}
+                                    {% for error in form.project_types.errors %}
+                                    <div class="has-error help-block text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
-
-
-
-                        </div>
-                        <div class="col-md-6">
-
-                            <div class="form-group {% if form.last_year.errors %}has-error{% endif %}">
-                                {{ form.last_year.label_tag }}
-                                {{ form.last_year }}
-                                {% if form.last_year.errors %}
-                                {% for error in form.last_year.errors %}
-                                <div class="has-error help-block text-danger">{{ error }}</div>
-                                {% endfor %}
-                                {% endif %}
-                            </div>
-
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row" >
-            <a href="{% url 'find_projects_roi' %}" class="btn btn-default">Reset</a>
-            <button type="submit" class="btn  btn-success">Submit</button>
-        </div>
-    </div>
-    <div class="col-md-5">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>Select Project Type(s):</h4>
-                <p>(leave blank for all project types)</p>
-                <div class="form-group {% if form.project_types.errors %}has-error{% endif %}">
-                    {{ form.project_types.label_tag }}
-                    {{ form.project_types }}
-                    {% if form.project_types.errors %}
-                    {% for error in form.project_types.errors %}
-                    <div class="has-error help-block text-danger">{{ error }}</div>
-                    {% endfor %}
-                    {% endif %}
+                <div class="d-flex">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-row" >
+                                <div>
+
+                                    <div class="form-group {% if form.first_year.errors %}has-error{% endif %} mx-3">
+                                        {{ form.first_year.label_tag }}
+                                        {{ form.first_year }}
+                                        {% if form.first_year.errors %}
+                                        {% for error in form.first_year.errors %}
+                                        <div class="has-error help-block text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+
+
+
+                                </div>
+                                <div>
+                                    <div class="form-group {% if form.last_year.errors %}has-error{% endif %} mx-3">
+                                        {{ form.last_year.label_tag }}
+                                        {{ form.last_year }}
+                                        {% if form.last_year.errors %}
+                                        {% for error in form.last_year.errors %}
+                                        <div class="has-error help-block text-danger">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3" >
+                    <div>
+                        <button href="{% url 'find_projects_roi' %}" class="btn btn-outline-secondary text-dark">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</form>
+        </form>
     </div>
 </div>
-
 
 
 

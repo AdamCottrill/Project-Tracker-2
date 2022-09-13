@@ -1160,7 +1160,7 @@ class TestDetailPageReOpenProject(TestCase):
 
         self.EditBtn = (
             '<button type="button" '
-            + 'class="btn btn-default">Edit Information</button>'
+            + 'class="btn btn-outline-secondary text-dark mx-1">Edit Information</button>'
         )
 
         self.SignOffBtn = (
@@ -1169,7 +1169,7 @@ class TestDetailPageReOpenProject(TestCase):
 
         self.ReOpenBtn = (
             '<button type="button" '
-            + 'class="btn btn-success">Re-Open Project</button>'
+            + 'class="btn btn-success mx-1">Re-Open Project</button>'
         )
 
     def test_no_reopen_btn_active_project_manager(self):

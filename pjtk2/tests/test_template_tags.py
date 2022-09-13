@@ -213,15 +213,15 @@ def test_milestone_status_glyph():
 
     should_be = [
          ("required-done",
-          '<span class="glyphicon glyphicon-ok icon-green"></span>'),
+          '<span class="fa fa-check" aria-label="Checkmark icon" style="color:green"></span>'),
          ("required-notDone",
-          '<span class="glyphicon glyphicon-question-sign icon-red"></span>'),
+          '<span class="fa fa-question" aria-label="Question mark icon" style="color:red"></span>'),
          ("notRequired-done",
-          '<span class="glyphicon glyphicon-ok icon-grey"></span>'),
+          '<span class="fa fa-check" aria-label="Checkmark icon"></span>'),
          ("notRequired-notDone",
-          '<span class="glyphicon glyphicon-minus icon-grey"></span>'),
+          '<span class="fa fa-minus" aria-label="Minus icon"></span>'),
          ("foo-bar",
-          '<span class="glyphicon glyphicon-minus icon-grey"></span>')
+          '<span class="fa fa-minus" aria-label="Minus icon"></span>')
 
     ]
 

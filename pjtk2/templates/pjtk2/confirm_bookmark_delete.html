@@ -7,7 +7,7 @@
 
 {% block content  %}
 
-<div class="container" >
+<div class="container p-4" >
 
   <h3> Are you sure you want to delete the bookmark for this project?</h3>
   <br />
@@ -16,7 +16,7 @@
   <br />
   <form method="post", action="">
     {% csrf_token %}
-    <p><input type="submit" value="Delete bookmark" class="btn btn-default"/></p>
+    <p><input type="submit" value="Delete bookmark" class="btn btn-danger"/></p>
   </form>
 
 </div>

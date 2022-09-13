@@ -54,12 +54,12 @@ def milestone_status_glyph(status):
     """
     """
 
-    default = '<span class="glyphicon glyphicon-minus icon-grey"></span>'
+    default = '<span class="fa fa-minus" aria-label="Minus icon"></span>'
 
     glyphs = {
-        "required-done": '<span class="glyphicon glyphicon-ok icon-green"></span>',
-        "required-notDone": '<span class="glyphicon glyphicon-question-sign icon-red"></span>',
-        "notRequired-done": '<span class="glyphicon glyphicon-ok icon-grey"></span>',
+        "required-done": '<span class="fa fa-check" aria-label="Checkmark icon" style="color:green"></span>',
+        "required-notDone": '<span class="fa fa-question" aria-label="Question mark icon" style="color:red"></span>',
+        "notRequired-done": '<span class="fa fa-check" aria-label="Checkmark icon"></span>',
         "notRequired-notDone": default,
     }
 

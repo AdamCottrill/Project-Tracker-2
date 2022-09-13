@@ -36,13 +36,13 @@
 
 {% block content %}
 
-<div  class="container" >
+<div  class="container p-3" >
 
 
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default" >
-                <div  class="panel-body" >
+            <div class="card" >
+                <div  class="card-body" >
 
                     <div  class="row" >
                         <div  class="col-md-12" >
@@ -75,7 +75,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="form-group {% if form.caption.errors %}has-error{% endif %}">
+                        <div class="form-group {% if form.caption.errors %}has-error{% endif %} mt-2">
                             {{ form.caption.label_tag }}
                             {{ form.caption|addcss:"form-control"}}
                             {% if form.caption.errors %}
@@ -85,7 +85,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="form-group {% if form.report.errors %}has-error{% endif %}">
+                        <div class="form-group {% if form.report.errors %}has-error{% endif %} mt-2">
                             {{ form.report.label_tag }}
                             {{ form.report}}
                             {% if form.report.errors %}
@@ -96,14 +96,14 @@
                         </div>
 
                         <hr />
-                        <div  class="row" >
+                        <div  class="d-flex flex-row" >
                             <div  class="col-md-6" >
                                 <a href="{{ object.get_absolute_url }}">Cancel</a>
                             </div>
                             <div  class="col-md-6" >
-                                <input class="btn btn-primary float-right" type="submit"
+                                <input class="btn btn-primary" type="submit"
                                        name="save" value="Save">
-                                <input class="btn btn-primary float-right" type="submit"
+                                <input class="btn btn-primary" type="submit"
                                        name="save_and_add" value="Save and Add Another">
                             </div>
                         </div>
