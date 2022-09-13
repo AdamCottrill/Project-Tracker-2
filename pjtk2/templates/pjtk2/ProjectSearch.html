@@ -16,16 +16,16 @@
 {% block content  %}
 
 
-    <div class="container-fluid" >
+    <div class="container-fluid p-4" id="main-content">
 
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-8 col-md-offset-2">
                 <h2>Search For Projects By Any Keyword</h2>
                 <form id="search" class="form-search"
-                      method="get">
+                    method="get">
                     <div class="input-group">
                         <input type="text" class="form-control" name="search" placeholder =
-                                     "keywords or phrases" {% if search  %}value="{{ search }}" {% endif %}>
+                                    "keywords or phrases" {% if search  %}value="{{ search }}" {% endif %}>
 
                         {% include "pjtk2/_search_hidden_inputs.html" %}
 
@@ -34,9 +34,7 @@
                         {% endif %}
 
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
+                            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
                         </span>
                     </div><!-- /input-group -->
                 </form>
@@ -49,13 +47,13 @@
             <div class="col-md-2">
                 <h3>Refine By:</h3>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Lake
+                <div class="card">
+                    <div class="card-header">Lake
                         {% if 'lake' in filters %}
                             <a class="pull-right" href="{% strip_parameter 'lake' %}">Reset</a>
                         {% endif %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <ul>
                             {% for lake in lakes %}
                                 <li> <a href="?{% query_transform lake=lake.lakeAbbrev %}">
@@ -67,28 +65,31 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Years
+                <div class="card mt-4">
+                    <div class="card-header">Years
                         {% if filters.first_year or filters.last_year %}
                             <a class="pull-right" onClick=resetYears()>Reset</a>
                         {% endif %}
 
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <form id="years" action={{request.get_full_path}} method="get">
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="first-year" name="first_year" placeholder =
-                                             "first year">
+                                            "first year">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group mt-3">
                                 <input type="text" class="form-control" id="last-year" name="last_year" placeholder =
-                                             "last year">
+                                            "last year">
                             </div>
-                            <button class="btn btn-default btn-sm" type="button" onClick=handleClick()>
-                                Update years
-                            </button>
+                            <div class="form-group mt-3">
+                                <button class="btn btn-outline-secondary btn-sm text-dark" type="button" onClick=handleClick()>
+                                    Update years
+                                </button>
+                            </div>
+
 
                         </form>
 
@@ -96,13 +97,13 @@
                 </div>
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Project Code
+                <div class="card mt-4">
+                    <div class="card-header">Project Code
                         {% if 'prj_cd__like' in filters %}
                             <a class="pull-right" href="{% strip_parameter 'prj_cd__like' %}">Reset</a>
                         {% endif %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <form id="prj_cd__like" method="get">
 
@@ -117,9 +118,11 @@
                                 <input type="hidden" name="search" value="{{filters.search}}" />
                             {% endif %}
 
-                            <button class="btn btn-default btn-sm" type="submit" >
-                                Update
-                            </button>
+                            <div class="form-group mt-3">
+                                <button class="btn btn-outline-secondary btn-sm text-dark" type="submit" >
+                                    Update
+                                </button>
+                            </div>
 
                         </form>
 
@@ -129,13 +132,13 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Project Scope
+                <div class="card mt-4">
+                    <div class="card-header">Project Scope
                         {% if 'scope' in filters %}
                             <a class="pull-right" href="{% strip_parameter 'scope' %}">Reset</a>
                         {% endif %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <ul>
                             {% for item in project_scope %}
@@ -150,13 +153,13 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Project Type
+                <div class="card mt-4">
+                    <div class="card-header">Project Type
                         {% if 'project_type' in filters %}
                             <a class="pull-right" href="{% strip_parameter 'project_type' %}">Reset</a>
                         {% endif %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <ul>
                             {% for item in project_types %}
@@ -172,13 +175,13 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">Protocol
+                <div class="card mt-4">
+                    <div class="card-header">Protocol
                         {% if 'protocol' in filters %}
                             <a class="pull-right" href="{% strip_parameter 'protocol' %}">Reset</a>
                         {% endif %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <ul>
                             {% for item in protocols %}
                                 <li>
@@ -194,7 +197,7 @@
                 </div>
 
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9" >
 
                 {% if filters %}
                     <h3>{% if lake %} {{lake.lake_name}} {% endif %} Projects
@@ -243,23 +246,23 @@
 
 
                     {% if is_paginated %}
-                        <ul class="pagination">
+                        <ul class="pagination flex-wrap">
                             {% if page_obj.has_previous %}
-                                <li><a href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&laquo;</a></li>
-    {% else %}
-                                <li class="disabled"><span>&laquo;</span></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&laquo;</a></li>
+                            {% else %}
+                                <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
                             {% endif %}
                             {% for i in paginator.page_range %}
                                 {% if page_obj.number == i %}
-                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                    <li class="page-item active"><span class="page-link">{{ i }} <span class="visually-hidden">(current)</span></span></li>
                                 {% else %}
-                                    <li><a href="?page={{ i }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a></li>
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a></li>
                                 {% endif %}
                             {% endfor %}
                             {% if page_obj.has_next %}
-                                <li><a href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&raquo;</a></li>
-    {% else %}
-                                <li class="disabled"><span>&raquo;</span></li>
+                                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key,value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">&raquo;</a></li>
+                            {% else %}
+                                <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
                             {% endif %}
                         </ul>
                     {% endif %}

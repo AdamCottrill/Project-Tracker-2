@@ -25,13 +25,13 @@
 {% block content  %}
 
 
-<div  class="container" >
+<div  class="container p-4" >
 
 
     <h1>{{ action }} Project Details {{ prj_cd }}</h1>
 
-    <div class="panel panel-default">
-        <div class="panel-body">
+    <div class="card mt-4">
+        <div class="card-body">
 
             <form id="ProjectForm" method="post" action=".">
                 {% csrf_token %}
@@ -55,11 +55,11 @@
                 {% endif %}
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Project Data</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Project Data</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <div id="project-meta-row" class="row" >
                             <div class="col-md-6" >
@@ -137,11 +137,11 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Project Type</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Project Type</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <div  class="row" >
 
@@ -190,11 +190,11 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Project Funding Sources</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Project Funding Sources</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
 
                         <div  class="row" >
 
@@ -251,11 +251,11 @@
                     <div id="staff-col" class="col-md-9" >
 
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Staff</h3>
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Staff</h3>
                             </div>
-                            <div class="panel-body">
+                            <div class="card-body">
 
                                 <div id="staff-row" class="row" >
                                     <div class="col-md-6" >
@@ -333,12 +333,11 @@
 
                     <div id="milestone-col" class="col-md-3" >
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Project Milestones</h3>
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Project Milestones</h3>
                             </div>
-                            <div class="panel-body">
-                                {{ form.milestones.label_tag }}
+                            <div class="card-body">
                                 {{ form.milestones }}
                                 {% if form.milestones.errors %}
                                 {% for error in form.milestones.errors %}
@@ -357,11 +356,11 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Keywords (comma separated values):</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Keywords (comma separated values):</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="form-group form-horizontal {% if form.tags.errors %}has-error{% endif %}">
 
                             {{ form.tags }}
@@ -380,11 +379,11 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Project Abstract (public facing)</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Project Abstract (public facing)</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="form-group {% if form.abstract.errors %}has-error{% endif %}">
                             {{ form.abstract }}
                             {% if form.abstract.errors %}
@@ -397,11 +396,11 @@
                 </div>  <!-- panel -->
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Remarks and Comments (internal use):</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Remarks and Comments (internal use):</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="form-group {% if form.comment.errors %}has-error{% endif %}">
 
                             {{ form.comment }}
@@ -416,11 +415,11 @@
 
 
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Risks associated with not running this project:</h3>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Risks associated with not running this project:</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         <div class="form-group {% if form.risk.errors %}has-error{% endif %}">
 
                             {{ form.risk }}
