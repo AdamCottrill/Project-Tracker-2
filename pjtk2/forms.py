@@ -2,6 +2,7 @@
 # E1120 - No value passed for parameter 'cls' in function call
 # pylint: disable=E1101, E1120
 
+from cProfile import label
 import csv
 import datetime
 import hashlib
@@ -212,7 +213,7 @@ class NoticesForm(forms.Form):
     can click the read box and submit the form to remove them from the
     que."""
 
-    read = forms.BooleanField(label="Read:", required=False)
+    read = forms.BooleanField(label="Read:", required=False, widget=forms.CheckboxInput(attrs={"aria-labelledby":"read"}))
 
     prj_nm = forms.CharField(widget=ReadOnlyText, label="Project Name", required=False)
 

@@ -741,7 +741,7 @@ class TestDetailPageCancelledProjects(TestCase):
         self.message = "This project was cancelled."
 
         self.ApproveBtn = (
-            '<button type="button" ' + 'class="btn btn-primary">Approve</button>'
+            '<button type="button" ' + 'class="btn btn-primary mx-1">Approve</button>'
         )
 
         self.CancelBtn = (
@@ -1155,7 +1155,7 @@ class TestDetailPageReOpenProject(TestCase):
         )
 
         self.SignOffBtn = (
-            '<button type="button" ' + 'class="btn btn-success">Sign Off</button>'
+            '<button type="button" ' + 'class="btn btn-success mx-1">Sign Off</button>'
         )
 
         self.ReOpenBtn = (

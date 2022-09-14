@@ -32,7 +32,7 @@
                             {% if img.report is True %}
                             {% if edit %}
                             <a href="{% url 'project_edit_image' img.id %}" class="btn btn-outline-secondary text-dark btn-sm pull-right"
-                               data-bs-toggle="tooltip" title="Included in Annual Report">
+                               data-bs-toggle="tooltip" title="Included in Annual Report" role="button">
                                <i class="fa fa-check"></i></a>
                             {% else %}
 
@@ -43,9 +43,9 @@
                             {% endif %}
                             {% endif %}
                             {% if edit %}
-                            <a href="{% url 'project_edit_image' img.id %}" class="pull-right"
-                               data-bs-toggle="tooltip" title="Change Image Attributes">
-                                <button class="btn btn-outline-secondary btn-sm text-dark" aria-hidden="true"><i class="fa fa-pencil"></i></button></a>
+                            <a href="{% url 'project_edit_image' img.id %}" class="pull-right btn btn-outline-secondary btn-sm text-dark"
+                               data-bs-toggle="tooltip" title="Change Image Attributes" role="button">
+                               <i class="fa fa-pencil"></i></a>
                             {% endif %}
                         
                 </div>
@@ -64,9 +64,9 @@
         </div>
         {% if edit %}
         {% if project.images.count > 1 %}
-        <a href="{% url 'project_images' project.slug %}" class="mt-1 pull-right"
-        data-bs-toggle="tooltip" title="Change Image Order">
-         <button class="btn btn-outline-secondary btn-sm text-dark" aria-hidden="true"><i class="fa fa-random"></i></button></a>
+        <a href="{% url 'project_images' project.slug %}" class="mt-1 pull-right btn btn-outline-secondary btn-sm text-dark"
+        data-bs-toggle="tooltip" title="Change Image Order" role="button">
+            <i class="fa fa-random"></i></a>
         {% endif %}
         {% endif %}
     </div>
