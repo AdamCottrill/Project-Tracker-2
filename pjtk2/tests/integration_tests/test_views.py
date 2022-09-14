@@ -1,41 +1,32 @@
 import unittest
-
-from django.contrib.auth import get_user
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
-from django.urls import reverse
-from django.db.models.signals import pre_save
-from django.test.client import Client
-from django.test import TestCase
-
 from datetime import datetime
-import pytz
-
-from pjtk2.models import (
-    send_notice_prjms_changed,
-    Project,
-    ProjectMilestones,
-    Milestone,
-)
-
-from pjtk2.tests.factories import (
-    ProjectFactory,
-    MilestoneFactory,
-    ProjectMilestonesFactory,
-    UserFactory,
-    EmployeeFactory,
-    FundingSourceFactory,
-    ProjectFundingFactory,
-)
-
-
-from pjtk2.views import can_edit
-from pjtk2.utils.helpers import is_manager, is_dba
-
-# from pjtk2.functions import can_edit
 
 import pytest
+import pytz
+from django.contrib.auth import get_user, get_user_model
+from django.db.models.signals import pre_save
+from django.test import TestCase
+from django.test.client import Client
+from django.urls import reverse
+from pjtk2.models import (
+    Milestone,
+    Project,
+    ProjectMilestones,
+    send_notice_prjms_changed,
+)
+from pjtk2.tests.factories import (
+    EmployeeFactory,
+    FundingSourceFactory,
+    MilestoneFactory,
+    ProjectFactory,
+    ProjectFundingFactory,
+    ProjectMilestonesFactory,
+    UserFactory,
+)
+from pjtk2.utils.helpers import is_dba, is_manager
+from pjtk2.views import can_edit
 
+# from pjtk2.functions import can_edit
 User = get_user_model()
 
 

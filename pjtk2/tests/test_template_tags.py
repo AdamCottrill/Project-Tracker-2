@@ -1,24 +1,23 @@
-from django.db.models.signals import pre_save
-from django.conf import settings
-
 import datetime
-import pytz
+
 import pytest
-
-from .factories import ProjectFactory, ProjTypeFactory, MilestoneFactory
-
+import pytz
+from django.conf import settings
+from django.db.models.signals import pre_save
 from pjtk2.models import ProjectMilestones, send_notice_prjms_changed
+from pjtk2.templatetags.pjtk2_tags import (
+    fisheye_button,
+    highlight_status,
+    milestone_status_glyph,
+)
 
-from pjtk2.templatetags.pjtk2_tags import (fisheye_button,
-                                           highlight_status,
-                                           milestone_status_glyph)
+from .factories import MilestoneFactory, ProjectFactory, ProjTypeFactory
 
 
 def get_project_link_url(label):
-    """ pull out the detail url from the settings file.
-    """
+    """pull out the detail url from the settings file."""
 
-    url = settings.LOCAL_LINKS.get('project_types').get(label).get('detail_url')
+    url = settings.LOCAL_LINKS.get("project_types").get(label).get("detail_url")
     return url
 
 
@@ -30,20 +29,17 @@ def merge_data(project, milestone):
     - `milestone`:
 
     """
-    tmp = ProjectMilestones.objects.get(project=project,
-                                        milestone=milestone)
+    tmp = ProjectMilestones.objects.get(project=project, milestone=milestone)
     tmp.completed = datetime.datetime.now(pytz.utc)
     tmp.save()
 
     return None
 
 
-
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 def disconnect_signals():
-    '''disconnect the signals before each test - not needed here'''
-    pre_save.disconnect(send_notice_prjms_changed,
-                        sender=ProjectMilestones)
+    """disconnect the signals before each test - not needed here"""
+    pre_save.disconnect(send_notice_prjms_changed, sender=ProjectMilestones)
 
 
 @pytest.mark.django_db
@@ -57,13 +53,13 @@ def test_fisheye_button_creel():
 
     """
 
-    ms =  MilestoneFactory.create(label='Data Merged')
-    project_type_label = 'Creel Survey'
+    ms = MilestoneFactory.create(label="Data Merged")
+    project_type_label = "Creel Survey"
     url = get_project_link_url(project_type_label)
     project_type = ProjTypeFactory.create(project_type=project_type_label)
     project = ProjectFactory.create(project_type=project_type)
 
-    #pre-data merge milestone
+    # pre-data merge milestone
     button = fisheye_button(project)
     assert button is ""
 
@@ -85,13 +81,13 @@ def test_fisheye_button_stocking():
     the data merge milestone has been satisfied.
 
     """
-    ms =  MilestoneFactory.create(label='Data Merged')
-    project_type_label = 'Fish Stocking'
+    ms = MilestoneFactory.create(label="Data Merged")
+    project_type_label = "Fish Stocking"
     url = get_project_link_url(project_type_label)
     project_type = ProjTypeFactory.create(project_type=project_type_label)
     project = ProjectFactory.create(project_type=project_type)
 
-    #pre-data merge milestone
+    # pre-data merge milestone
     button = fisheye_button(project)
     assert button is ""
 
@@ -114,13 +110,13 @@ def test_fisheye_button_offshore():
 
     """
 
-    ms =  MilestoneFactory.create(label='Data Merged')
-    project_type_label = 'Offshore Index Netting'
+    ms = MilestoneFactory.create(label="Data Merged")
+    project_type_label = "Offshore Index Netting"
     url = get_project_link_url(project_type_label)
     project_type = ProjTypeFactory.create(project_type=project_type_label)
     project = ProjectFactory.create(project_type=project_type)
 
-    #pre-data merge milestone
+    # pre-data merge milestone
     button = fisheye_button(project)
     assert button is ""
 
@@ -143,20 +139,20 @@ def test_fisheye_button_nearshore():
 
     """
 
-    ms =  MilestoneFactory.create(label='Data Merged')
-    project_type_label = 'Nearshore Index Netting'
+    ms = MilestoneFactory.create(label="Data Merged")
+    project_type_label = "Nearshore Index Netting"
     url = get_project_link_url(project_type_label)
     project_type = ProjTypeFactory.create(project_type=project_type_label)
     project = ProjectFactory.create(project_type=project_type)
 
-    #pre-data merge milestone
+    # pre-data merge milestone
     button = fisheye_button(project)
     assert button is ""
 
     project.initialize_milestones()
     merge_data(project, ms)
 
-    #post data-merge milestone
+    # post data-merge milestone
     button = fisheye_button(project)
     assert "View in Fisheye" in button
     assert url in button
@@ -173,14 +169,13 @@ def test_fisheye_button_synthesis():
 
     """
 
-    ms =  MilestoneFactory.create(label='Data Merged')
-    project_type_label = 'Synthesis and Analysis'
+    ms = MilestoneFactory.create(label="Data Merged")
+    project_type_label = "Synthesis and Analysis"
     project_type = ProjTypeFactory.create(project_type=project_type_label)
     project = ProjectFactory.create(project_type=project_type)
 
     button = fisheye_button(project)
     assert button is ""
-
 
 
 def test_highlight_status_filter():
@@ -195,8 +190,6 @@ def test_highlight_status_filter():
         ("Ongoing", "blue"),
         ("Complete", "green"),
         ("Unknown", "black"),
-
-
     ]
 
     for pair in should_be:
@@ -212,17 +205,23 @@ def test_milestone_status_glyph():
     """
 
     should_be = [
-         ("required-done",
-          '<span class="fa fa-check" aria-label="Checkmark icon" style="color:green"></span>'),
-         ("required-notDone",
-          '<span class="fa fa-question" aria-label="Question mark icon" style="color:red"></span>'),
-         ("notRequired-done",
-          '<span class="fa fa-check" aria-label="Checkmark icon"></span>'),
-         ("notRequired-notDone",
-          '<span class="fa fa-minus" aria-label="Minus icon"></span>'),
-         ("foo-bar",
-          '<span class="fa fa-minus" aria-label="Minus icon"></span>')
-
+        (
+            "required-done",
+            '<span class="fa fa-check" aria-label="Checkmark icon" style="color:green"></span>',
+        ),
+        (
+            "required-notDone",
+            '<span class="fa fa-question" aria-label="Question mark icon" style="color:red"></span>',
+        ),
+        (
+            "notRequired-done",
+            '<span class="fa fa-check" aria-label="Checkmark icon"></span>',
+        ),
+        (
+            "notRequired-notDone",
+            '<span class="fa fa-minus" aria-label="Minus icon"></span>',
+        ),
+        ("foo-bar", '<span class="fa fa-minus" aria-label="Minus icon"></span>'),
     ]
 
     for pair in should_be:

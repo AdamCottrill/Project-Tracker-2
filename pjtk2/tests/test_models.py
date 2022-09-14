@@ -1152,7 +1152,10 @@ class TestModelSisters(TestCase):
         )
 
         self.assertQuerysetEqual(
-            sisters2, [self.project1.prj_cd, self.project2.prj_cd], lambda a: a.prj_cd
+            sisters2,
+            [self.project1.prj_cd, self.project2.prj_cd],
+            lambda a: a.prj_cd,
+            ordered=False,
         )
 
     def test_has_sisters(self):

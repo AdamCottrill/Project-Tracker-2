@@ -1,20 +1,16 @@
 import pytest
-
-from django.db.models import Q
 from django.contrib.auth import get_user_model
-from django.test import TestCase, Client, RequestFactory
+from django.db.models import Q
+from django.test import RequestFactory
 from django.urls import reverse
-
-from rest_framework import status
-
-from pjtk2.models import Project, ProjectType
 from pjtk2.api.serializers import (
     ProjectSerializer,
     ProjectTypeSerializer,
     UserSerializer,
 )
-from pjtk2.tests.factories import UserFactory, ProjTypeFactory, ProjectFactory
-
+from pjtk2.models import Project, ProjectType
+from pjtk2.tests.factories import ProjectFactory, ProjTypeFactory, UserFactory
+from rest_framework import status
 from rest_framework.test import APITestCase
 
 User = get_user_model()
@@ -187,19 +183,12 @@ class ProjectAPITest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["results"], serializer.data)
 
-    @pytest.mark.xfail
     def test_project_list_api_get_filter_multiple_project_types(self):
         """The project list api accepts url filters for project_type - if the
         filter is included in the url, the response should only return
         projects of that project types.  Multiple project types can be
         submitted in the request. The response should be a series of json
         objects that satisfy that criteria.
-
-        #this test is marked to fail because multiple filters are not
-        #currently supported in the project_type filter.  An existing
-        #project_type filter was inplace for ProjectType - we will
-        #revisit it later as see if we can make it accept multiple
-        #projects without breaking existing uses.
 
         """
         baseurl = reverse("api:project-list")
