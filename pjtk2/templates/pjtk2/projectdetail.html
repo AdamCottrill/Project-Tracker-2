@@ -458,8 +458,7 @@
 
                 {% if edit %}
                 <td>
-                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}" class="btn btn-danger btn-sm"
-                    title="Delete Report" role="button">
+                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}" class="btn btn-danger btn-sm" title="Delete Report" role="button">
                         <span class="fa fa-times"></span>
                     </a>
                 </td>
