@@ -11,19 +11,15 @@ import re
 from itertools import chain
 
 import pytz
-from crispy_forms.bootstrap import PrependedText
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import ButtonHolder, Div, Field, Fieldset, Layout, Submit
-
-# from django import forms
+from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.gis import forms
+
+# from django.contrib.gis import forms
 from django.contrib.gis.forms.fields import PolygonField
 from django.contrib.gis.geos import Point
 from django.core.validators import FileExtensionValidator
 from django.db.models.aggregates import Max, Min
 from django.forms import (
-    CharField,
     ModelChoiceField,
     ModelForm,
     ModelMultipleChoiceField,
@@ -33,7 +29,6 @@ from django.forms.formsets import BaseFormSet
 from django.forms.widgets import (
     CheckboxInput,
     CheckboxSelectMultiple,
-    Select,
     mark_safe,
 )
 
@@ -46,13 +41,14 @@ from django.utils.safestring import mark_safe
 # from olwidget.fields import MapField, EditableLayerField
 from leaflet.forms.widgets import LeafletWidget
 from openpyxl import load_workbook
-from taggit.forms import *
+from taggit.forms import TagField
+
+from common.models import Lake
 
 from .models import (
     AssociatedFile,
     Database,
     FundingSource,
-    Lake,
     Messages2Users,
     Milestone,
     Project,
@@ -741,19 +737,40 @@ class ProjectForm(forms.ModelForm):
     )
 
     abstract = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "input-xxlarge", "rows": 20, "cols": 60}),
+        widget=forms.Textarea(
+            attrs={
+                "class": "input-xxlarge",
+                "rows": 20,
+                "cols": 60,
+                "aria-label": "project-abstract",
+            }
+        ),
         label="Project Abstract (public):",
         required=True,
     )
 
     comment = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "input-xxlarge", "rows": 20, "cols": 60}),
+        widget=forms.Textarea(
+            attrs={
+                "class": "input-xxlarge",
+                "rows": 20,
+                "cols": 60,
+                "aria-label": "project-comments-remarks",
+            }
+        ),
         label="Comments, Concerns or Remarks:",
         required=False,
     )
 
     risk = forms.CharField(
-        widget=forms.Textarea(attrs={"class": "input-xxlarge", "rows": 20, "cols": 60}),
+        widget=forms.Textarea(
+            attrs={
+                "class": "input-xxlarge",
+                "rows": 20,
+                "cols": 60,
+                "aria-label": "project-risks",
+            }
+        ),
         label="Risks associated with not running project:",
         required=False,
     )
@@ -854,6 +871,8 @@ class ProjectForm(forms.ModelForm):
         self.readonly = readonly
         self.manager = manager
         self.dba = dba
+
+        self.fields["tags"].widget.attrs["aria-label"] = "keywords"
 
         if not (manager or dba):
             self.fields["owner"].required = False
@@ -1050,6 +1069,7 @@ class ProjectFundingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectFundingForm, self).__init__(*args, **kwargs)
+
         for fld in self.visible_fields():
             if "class" in fld.field.widget.attrs.keys():
                 class_attrs = fld.field.widget.attrs["class"]

@@ -4,6 +4,7 @@ from pjtk2.models import Project, Bookmark, ProjectType, Milestone
 
 from django.template.defaultfilters import stringfilter
 
+
 # from django.contrib.auth import user
 from django.utils.safestring import mark_safe
 
@@ -51,8 +52,7 @@ register.tag("if_bookmarked", do_if_Bookmarked)
 
 @register.filter
 def milestone_status_glyph(status):
-    """
-    """
+    """ """
 
     default = '<span class="fa fa-minus" aria-label="Not required and not done"></span>'
 
@@ -68,8 +68,7 @@ def milestone_status_glyph(status):
 
 @register.filter
 def highlight_status(status):
-    """ a little filter to colour our status entires in project lists.
-    """
+    """a little filter to colour our status entires in project lists."""
 
     status_colours = {"Cancelled": "red", "Ongoing": "blue", "Complete": "green"}
 
@@ -186,8 +185,7 @@ def strip_parameter(context, param):
 @register.filter
 @stringfilter
 def space(string):
-    """A simple little template filter to replace underscores with spaces
-    """
+    """A simple little template filter to replace underscores with spaces"""
     return mark_safe(string.replace("_", " "))
 
 

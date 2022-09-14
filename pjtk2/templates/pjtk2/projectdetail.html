@@ -510,8 +510,8 @@
                     {{ report.milestone }}
                 </td>
                 {% if report.report %}
-                <td><a href="{% url 'serve_file' report.report %}">{{ report.report }}</a></td>
-                {% if edit %}
+                    <td><a href="{% url 'serve_file' report.report %}">{{ report.report }}</a></td>
+                    {% if edit %}
                 <td>
                     <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}">
                         <button type="button" class="btn btn-danger btn-sm">
