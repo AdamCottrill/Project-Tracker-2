@@ -745,11 +745,11 @@ class TestDetailPageCancelledProjects(TestCase):
         )
 
         self.CancelBtn = (
-            '<button type="button" ' + 'class="btn btn-danger">Cancel</button>'
+            '<button type="button" ' + 'class="btn btn-danger mx-1">Cancel</button>'
         )
 
         self.UnCancelBtn = (
-            '<button type="button" ' + 'class="btn btn-danger">Un-Cancel</button>'
+            '<button type="button" ' + 'class="btn btn-danger mx-1">Un-Cancel</button>'
         )
 
     def test_no_cancel_btn_unapproved_projects(self):

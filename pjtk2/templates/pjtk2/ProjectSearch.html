@@ -78,11 +78,11 @@
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="first-year" name="first_year" placeholder =
-                                            "first year">
+                                            "first year (YYYY)" aria-label="first year (YYYY)">
                             </div>
                             <div class="form-group mt-3">
                                 <input type="text" class="form-control" id="last-year" name="last_year" placeholder =
-                                            "last year">
+                                            "last year (YYYY)" aria-label="last year (YYYY)">
                             </div>
                             <div class="form-group mt-3">
                                 <button class="btn btn-outline-secondary btn-sm text-dark" type="button" onClick=handleClick()>
@@ -109,7 +109,7 @@
 
                             <div class="form-group">
                                 <input type="text" class="form-control"  name="prj_cd__like" placeholder =
-                                             "Project Code Contains..." value="{{filters.prj_cd__like}}">
+                                             "Project Code Contains..." aria-label="Project Code" value="{{filters.prj_cd__like}}">
                             </div>
 
                             {% include "pjtk2/_search_hidden_inputs.html" %}
