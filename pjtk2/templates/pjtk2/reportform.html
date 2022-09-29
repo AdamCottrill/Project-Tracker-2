@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<div class="container" >
+<div class="container p-4" >
 
     <h2> Update Reporting Requirements</h2>
     <hr />
@@ -18,9 +18,9 @@
 
         <div class="row" >
             <div class="col-md-4" >
-                <div class="panel panel-default">
-                    <div class="panel-heading">Project Milestones:</div>
-                    <div class="panel-body">
+                <div class="card card-default mb-2">
+                    <div class="card-header">Project Milestones:</div>
+                    <div class="card-body">
                         <div class="col-md-offset-1 ">
                             {{  Milestones|crispy }}
                         </div>
@@ -30,9 +30,9 @@
 
             <div class="row" >
                 <div class="col-md-4" >
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Core Reporting Requirements:</div>
-                        <div class="panel-body">
+                    <div class="card card-default mb-2">
+                        <div class="card-header">Core Reporting Requirements:</div>
+                        <div class="card-body">
                             <div class="col-md-offset-1 ">
                                 {{ Core|crispy }}
                             </div>
@@ -42,9 +42,9 @@
 
                 <div class="row" >
                     <div class="col-md-4" >
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Additional Reporting Requirements:</div>
-                            <div class="panel-body">
+                        <div class="card card-default">
+                            <div class="card-header">Additional Reporting Requirements:</div>
+                            <div class="card-body">
                                 <div class="col-md-offset-1 ">
                                     {{ Custom|crispy }}
                                 </div>
@@ -63,10 +63,10 @@
                 <button class="btn btn-primary" type="submit">Save Changes</button>
 
 
-                <button class="btn btn-default" data-toggle="modal" data-target="#modalMilestone">
+                <button type="button" class="btn btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#modalMilestone">
                     New Milestone
                 </button>
-                <button class="btn btn-default" data-toggle="modal" data-target="#modalReport">
+                <button type="button" class="btn btn-outline-secondary text-dark" data-bs-toggle="modal" data-bs-target="#modalReport">
                     New Report
                 </button>
 
@@ -80,19 +80,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button id="milestoneButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">New Milestone</h4>
+                    <button id="milestoneButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true" aria-label="Close window"></button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" role="form" method="POST" id="dialog2" name="dialog2" action="">
                         {% csrf_token  %}
 
-                        <div class="row" >
+                        <div class="row mx-2" >
                             <div class="col-md-10" >
-                                <input type="text" name="new_milestone" class="form-control"/>
+                                <input type="text" name="new_milestone" class="form-control" aria-label="New Milestone"/>
                             </div>
                             <div class="col-md-2" >
-                                <input type="submit"  value="Submit" name="Submit" class="btn btn-default"/>
+                                <input type="submit"  value="Submit" name="Submit" class="btn btn-primary"/>
                             </div>
                         </div>
 
@@ -106,20 +106,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button id="reportButton" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">New Report</h4>
+                    <button id="reportButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true" aria-label="Close window"></button>
                 </div>
                 <div class="modal-body">
 
                     <form method="POST" id="dialog" action="">
                         {% csrf_token  %}
 
-                        <div class="row" >
+                        <div class="row mx-2" >
                             <div class="col-md-10" >
-                                <input type="text" name="new_report" class="form-control"/>
+                                <input type="text" name="new_report" class="form-control" aria-label="New Report"/>
                             </div>
                             <div class="col-md-2" >
-                                <input type="submit"  value="Submit" name="Submit" class="btn btn-default"/>
+                                <input type="submit"  value="Submit" name="Submit" class="btn btn-primary"/>
                             </div>
                         </div>
 

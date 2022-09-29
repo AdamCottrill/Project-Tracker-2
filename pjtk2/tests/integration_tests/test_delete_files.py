@@ -200,7 +200,7 @@ class DeleteReportLinkOnDetailPageTestCase(WebTest):
         url = reverse(
             "delete_report", kwargs={"slug": self.project.slug, "pk": self.report.id}
         )
-        url = '<a href="{0}" class="btn btn-danger btn-sm" title="Delete Report" role="button">'.format(url)
+        url = '<a href="{0}" class="btn btn-danger btn-sm" aria-label="Delete Report" title="Delete Report" role="button">'.format(url)
         self.assertContains(response, url)
 
     def test_manager_has_delete_link(self):
@@ -229,7 +229,7 @@ class DeleteReportLinkOnDetailPageTestCase(WebTest):
         url = reverse(
             "delete_report", kwargs={"slug": self.project.slug, "pk": self.report.id}
         )
-        url = '<a href="{0}" class="btn btn-danger btn-sm" title="Delete Report" role="button">'.format(url)
+        url = '<a href="{0}" class="btn btn-danger btn-sm" aria-label="Delete Report" title="Delete Report" role="button">'.format(url)
         self.assertContains(response, url)
 
     def test_admin_has_delete_link(self):
@@ -256,7 +256,7 @@ class DeleteReportLinkOnDetailPageTestCase(WebTest):
         url = reverse(
             "delete_report", kwargs={"slug": self.project.slug, "pk": self.report.id}
         )
-        url = '<a href="{0}" class="btn btn-danger btn-sm" title="Delete Report" role="button">'.format(url)
+        url = '<a href="{0}" class="btn btn-danger btn-sm" aria-label="Delete Report" title="Delete Report" role="button">'.format(url)
         self.assertContains(response, url)
 
     def test_joe_user_does_not_have_delete_link(self):

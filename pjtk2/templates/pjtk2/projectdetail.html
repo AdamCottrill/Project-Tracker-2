@@ -331,12 +331,14 @@
                     <legend> Milestones:</legend>
                     <hr>
                     {% for milestone in milestones %}
-                        <input type="checkbox" disabled="disabled"
-                               {% if milestone.completed  %}
-                               checked="checked"
-                               {% endif %}
-                        />
+                    <span class="text-nowrap">
+                        {% if milestone.completed  %}
+                            <i class="fa fa-check-square-o ms-3" aria-label="Required"></i>
+                        {% else %}
+                            <i class="fa fa-square-o ms-3" aria-label="Not Required"></i>
+                        {% endif %}
                         {{ milestone.milestone.label }}
+                    </span>
                     {% endfor %}
 
                 </fieldset>
@@ -402,17 +404,17 @@
 
             <a href="#" onclick="javascript:window.location=this.href">
                 <a href="{% url 'uncancel_project' project.slug %}" onclick="javascript:window.location=this.href">
-                    <button type="button" class="btn btn-danger">Un-Cancel</button> </a>
+                    <button type="button" class="btn btn-danger mx-1">Un-Cancel</button> </a>
 
                 {% else %}
 
                 <a href="{% url 'Reports' project.slug %}?next={{ request.path|urlencode }}"
                    onclick="javascript:window.location=this.href">
-                    <button type="button" class="btn btn-primary">Change Reporting Requirements</button> </a>
+                    <button type="button" class="btn btn-primary mx-1">Change Reporting Requirements</button> </a>
 
 
                 <a href="{% url 'cancel_project' project.slug %}" onclick="javascript:window.location=this.href">
-                    <button type="button" class="btn btn-danger">Cancel</button> </a>
+                    <button type="button" class="btn btn-danger mx-1">Cancel</button> </a>
                 {% endif %}
 
                 {% else %}
@@ -448,17 +450,20 @@
             {% for report in Core  %}
 
             <tr>
-                <td > <input type="checkbox" disabled="disabled"
-                             {% if report.required %} checked="checked" {% endif %}>
-                    {{ report.milestone }}{% if report.milestone.shared and has_sister %}*{% endif %}
+                <td >{% if report.required %}
+                        <i class="fa fa-check-square-o" aria-label="Required"></i>
+                    {% else %}
+                        <i class="fa fa-square-o" aria-label="Not Required"></i>
+                    {% endif %}
+                    
                 </td>
-
+                <td>{{ report.milestone }}{% if report.milestone.shared and has_sister %}*{% endif %}</td>
                 {% if report.report %}
                     <td><a href="{% url 'serve_file' filename=report.report %}">{{ report.report }}</a></td>
 
                 {% if edit %}
                 <td>
-                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}" class="btn btn-danger btn-sm" title="Delete Report" role="button">
+                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}" class="btn btn-danger btn-sm" aria-label="Delete Report" title="Delete Report" role="button">
                         <span class="fa fa-times"></span>
                     </a>
                 </td>
@@ -513,10 +518,8 @@
                     <td><a href="{% url 'serve_file' report.report %}">{{ report.report }}</a></td>
                     {% if edit %}
                 <td>
-                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}">
-                        <button type="button" class="btn btn-danger btn-sm">
-                            <span class="fa fa-times"></span>
-                        </button>
+                    <a href="{% url 'delete_report' slug=project.slug pk=report.report.id %}" button type="button" class="btn btn-danger btn-sm" title="Delete Report" aria-label="Delete Report">
+                        <span class="fa fa-times"></span>
                     </a>
                 </td>
                 {% else %}
@@ -576,10 +579,8 @@
                 {% endif %}
                 {% if edit %}
                 <td>
-                    <a href="{% url 'delete_associated_file' file.id %}">
-                        <button type="button" class="btn btn-danger btn-sm">
-                            <span class="fa fa-times"></span>
-                        </button>
+                    <a href="{% url 'delete_associated_file' file.id %}" button type="button" class="btn btn-danger btn-sm" title="Delete File" aria-label="Delete File">
+                        <span class="fa fa-times"></span>
                     </a>
                 </td>
                 {% endif %}
