@@ -186,11 +186,11 @@ class Milestone(models.Model):
     id = models.AutoField(primary_key=True)
 
     # (database, display)
-    MILESTONE_CHOICES = {
+    MILESTONE_CHOICES = [
         ("Core", "core"),
         ("Suggested", "suggested"),
         ("Custom", "custom"),
-    }
+    ]
 
     label = models.CharField(max_length=50, unique=True, db_index=True)
     label_abbrev = models.CharField(max_length=50, unique=True)
@@ -223,11 +223,11 @@ class ProjectType(models.Model):
 
     id = models.AutoField(primary_key=True)
 
-    PROJECT_SCOPE_CHOICES = {
+    PROJECT_SCOPE_CHOICES = [
         ("FD", "Fishery Dependent"),
         ("FI", "Fishery Independent"),
         ("MS", "Multiple Sources"),
-    }
+    ]
 
     project_type = models.CharField(max_length=150, unique=True, blank=False)
     field_component = models.BooleanField(default=True)
@@ -1308,6 +1308,7 @@ class ProjectImage(models.Model):
     order = models.IntegerField("the order that the images are presented", default=0)
     image_path = models.ImageField(upload_to=get_image_path)
     caption = models.CharField("figure caption", max_length=1000)
+    # alt_text = models.CharField("figure caption", max_length=1000)
     report = models.BooleanField(
         "should this image be included in the annual report too?", default=True
     )
@@ -1564,7 +1565,7 @@ class Employee(models.Model):
     """The employee model is an extension to the user model that captures
     the hierachical employee-supervisor relationship between users."""
 
-    ROLL_CHOICES = {("manager", "Manager"), ("dba", "DBA"), ("employee", "Employee")}
+    ROLL_CHOICES = [("manager", "Manager"), ("dba", "DBA"), ("employee", "Employee")]
 
     id = models.AutoField(primary_key=True)
 
@@ -1614,7 +1615,7 @@ class Message(models.Model):
     # "Notification system is now working."
     # "Feature Request/Bug Reporting has been implemented."
 
-    LEVEL_CHOICES = {("info", "Info"), ("actionrequired", "Action Required")}
+    LEVEL_CHOICES = [("info", "Info"), ("actionrequired", "Action Required")]
 
     level = models.CharField(max_length=30, choices=LEVEL_CHOICES, default="info")
 
