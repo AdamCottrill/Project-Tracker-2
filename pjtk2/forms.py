@@ -581,6 +581,7 @@ class ReportUploadForm(forms.Form):
         # self.fields["report_path"].widget.attrs['style'] = "text-align: right;"
         self.fields["report_path"].widget.attrs["size"] = "40"
         self.fields["report_path"].widget.attrs["class"] = "fileinput"
+        self.fields["required"].widget.attrs["aria-labelledby"] = "required"
 
         if self.project.has_sister():
             initial = kwargs.get("initial")
@@ -1092,6 +1093,7 @@ class SisterProjectsForm(forms.Form):
         super(SisterProjectsForm, self).__init__(*args, **kwargs)
 
         self.fields["slug"].widget = forms.HiddenInput()
+        self.fields["sister"].widget.attrs["aria-labelledby"] = "sister"
         self.prj_cd = kwargs["initial"].get("prj_cd", None)
         self.url = kwargs["initial"].get("url", None)
 

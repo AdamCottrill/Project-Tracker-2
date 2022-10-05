@@ -208,9 +208,9 @@
                             </div>
 
 
-                            <p>How should we handle any existing points?</p>
                             <div class="form-group {% if form.replace.errors %}has-error{% endif %}">
-                                <div class="radio-inline">
+                                <div class="radio-inline" role="radiogroup" aria-labelledby="group_label">
+                                    <p id="group_label">How should we handle any existing points?</p>
                                     {{ form.replace }}
                                     {% if form.replace.errors %}
                                         {% for error in form.replace.errors %}
