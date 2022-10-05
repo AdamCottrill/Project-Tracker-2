@@ -2,7 +2,6 @@
 # E1120 - No value passed for parameter 'cls' in function call
 # pylint: disable=E1101, E1120
 
-from cProfile import label
 import csv
 import datetime
 import hashlib
@@ -11,6 +10,7 @@ import re
 from itertools import chain
 
 import pytz
+from common.models import Lake
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -25,12 +25,7 @@ from django.forms import (
     ModelMultipleChoiceField,
     ValidationError,
 )
-from django.forms.formsets import BaseFormSet
-from django.forms.widgets import (
-    CheckboxInput,
-    CheckboxSelectMultiple,
-    mark_safe,
-)
+from django.forms.widgets import CheckboxInput, CheckboxSelectMultiple, mark_safe
 
 # from django.utils.encoding import force_unicode
 from django.urls import reverse
@@ -42,8 +37,6 @@ from django.utils.safestring import mark_safe
 from leaflet.forms.widgets import LeafletWidget
 from openpyxl import load_workbook
 from taggit.forms import TagField
-
-from common.models import Lake
 
 from .models import (
     AssociatedFile,
@@ -213,7 +206,11 @@ class NoticesForm(forms.Form):
     can click the read box and submit the form to remove them from the
     que."""
 
-    read = forms.BooleanField(label="Read:", required=False, widget=forms.CheckboxInput(attrs={"aria-labelledby":"read"}))
+    read = forms.BooleanField(
+        label="Read:",
+        required=False,
+        widget=forms.CheckboxInput(attrs={"aria-labelledby": "read"}),
+    )
 
     prj_nm = forms.CharField(widget=ReadOnlyText, label="Project Name", required=False)
 
