@@ -12,7 +12,7 @@
 
 {% endblock %}
 
-{% block title %} Find Project {% endblock %}
+{% block title %} Project by Region of Interest {% endblock %}
 
 {% block content %}
 
@@ -47,6 +47,27 @@
 
         <form method="post" id="" action="">{% csrf_token %}
             <div>
+                <h1 class="mx-3">
+                    <label for="id_selection">Select region of interest on map:</label>
+                </h1>
+                <a class="btn btn-primary btn-sm mx-3" role="button" data-bs-toggle="collapse" href="#additional-information" aria-expanded="false" aria-controls="additional-information">
+                    Click for Instructions....
+                </a>
+        
+                <div class="collapse mx-3 mt-3" id="additional-information">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>
+                                Draw a square, circle, or polygon on the map to retrieve
+                                all projects within the selected region. Only one region
+                                can exist at a time and drawing a new region will replace the
+                                previous one. You may also apply filters after a region has
+                                been selected, such as Project Type, First Year, and 
+                                Last Year to the selected projects.
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="d-flex p-3">
                     {{ form.selection }}
                     <hr />
