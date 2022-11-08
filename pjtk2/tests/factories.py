@@ -209,6 +209,7 @@ class ProjectImageFactory(factory.django.DjangoModelFactory):
     order = factory.Sequence(lambda n: n)
     image_path = factory.Sequence(lambda n: "FakeImage-{}.png".format(n))
     caption = "Image caption placeholder"
+    alt_text = "Image alt text placeholder"
     report = True
 
 

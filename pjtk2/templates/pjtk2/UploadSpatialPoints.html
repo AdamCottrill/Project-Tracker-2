@@ -198,7 +198,7 @@
                         <div class="card-body">                               
                             
                             <div class="form-group {% if form.points_file.errors %}has-error{% endif %}">
-                                {{ form.points_file.label }}
+                                <div>{{ form.points_file.label }}:</div>
                                 {{ form.points_file }}
                                 {% if form.points_file.errors %}
                                     {% for error in form.points_file.errors %}

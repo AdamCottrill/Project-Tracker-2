@@ -25,7 +25,7 @@
                     <div class="card card-default">
                         <div class="card-body">
 
-                            <img class="img-responsive center-block"  src="../../../{{ image.image_path.url }}">
+                            <img class="img-fluid justify-content-center"  src="{{ image.image_path.url }}" alt="{{ image.alt_text }}">
                         </div>
                     </div>
 
@@ -54,6 +54,15 @@
                             {% endif %}
                         </div>
 
+                        <div class="form-group {% if form.alt_text.errors %}has-error{% endif %}">
+                            {{ form.alt_text.label_tag }}
+                            {{ form.alt_text|addcss:"form-control"}}
+                            {% if form.alt_text.errors %}
+                            {% for error in form.alt_text.errors %}
+                            <div class="has-error help-block text-danger">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
 
                         <div class="form-group {% if form.report.errors %}has-error{% endif %}">
                             {{ form.report.label_tag }}
@@ -67,14 +76,14 @@
 
 
                         <hr />
-                        <div  class="row" >
-                            <div  class="col-md-2" >
-                                <a href="{{ project.get_absolute_url }}">Cancel</a>
+                        <div  class="d-flex flex-row" >
+                            <div  class="me-auto" >
+                                <a class="btn btn-warning" href="{{ project.get_absolute_url }}">Cancel</a>
                             </div>
-                            <div  class="col-md-5 col-md-offset-5" >
+                            <div  class="ms-auto">
                                 <input class="btn btn-primary float-right" type="submit"
                                        name="save" value="Save">
-                                <a href="{% url 'delete_image_file' image.id %}" class="btn btn-danger float-right">Delete Image</a>
+                                <a href="{% url 'delete_image_file' image.id %}" class="btn btn-danger">Delete Image</a>
                             </div>
 
                         </div>

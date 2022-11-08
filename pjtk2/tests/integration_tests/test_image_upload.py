@@ -208,6 +208,7 @@ def test_add_image_post_save_canedit(client, project, user, manager, dba):
         image_data = {
             "order": i,
             "caption": "image number {}".format(i),
+            "alt_text": "image alt text",
             "project": project.id,
             "report": False,
             "image_path": img,
@@ -254,6 +255,7 @@ def test_add_image_post_add_more_canedit(client, project, user, manager, dba):
         image_data = {
             "order": i,
             "caption": "image number {}".format(i),
+            "alt_text": "image alt text",
             "project": project.id,
             "report": False,
             "image_path": img,
@@ -333,7 +335,7 @@ def test_edit_image_post_next_canedit(client, project, user, manager, dba):
         next_url = reverse("project_images", kwargs={"slug": project.slug})
 
         new_caption = "new caption {}".format(i)
-        image_data = {"caption": new_caption, "next": next_url}
+        image_data = {"caption": new_caption, "alt_text": "image alt text" ,"next": next_url}
 
         url = reverse("project_edit_image", kwargs={"pk": image.id})
 
@@ -364,7 +366,7 @@ def test_edit_image_post_no_next_canedit(client, project, user, manager, dba):
 
     """
 
-    image = ProjectImageFactory(project=project, caption="image caption", report=False)
+    image = ProjectImageFactory(project=project, caption="image caption", alt_text="image alt text", report=False)
 
     users = [user, manager, dba]
 
@@ -375,7 +377,7 @@ def test_edit_image_post_no_next_canedit(client, project, user, manager, dba):
 
         new_caption = "new caption {}".format(i)
         # no 'next'
-        image_data = {"caption": new_caption}
+        image_data = {"caption": new_caption, "alt_text": "image alt text"}
 
         url = reverse("project_edit_image", kwargs={"pk": image.id})
 
@@ -419,7 +421,7 @@ def test_edit_image_max_report_cutoff(client, project, user):
     login = client.login(username=user.username, password="Abcd1234")
     assert login is True
 
-    image_data = {"caption": "new caption", "report": True}
+    image_data = {"caption": "new caption", "alt_text":"new alt text", "report": True}
 
     url = reverse("project_edit_image", kwargs={"pk": image.id})
 

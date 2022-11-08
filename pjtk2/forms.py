@@ -1242,15 +1242,15 @@ class GeoForm(forms.Form):
 class ProjectImageForm(ModelForm):
     class Meta:
         model = ProjectImage
-        fields = ("image_path", "caption", "report")
-        widgets = {"caption": forms.Textarea(attrs={"rows": 4})}
+        fields = ("image_path", "caption","alt_text", "report")
+        widgets = {"caption": forms.Textarea(attrs={"rows": 4}),"alt_text": forms.Textarea(attrs={"rows": 4})}
 
 
 class EditImageForm(ModelForm):
     class Meta:
         model = ProjectImage
-        fields = ("caption", "report")
-        widgets = {"caption": forms.Textarea(attrs={"rows": 4})}
+        fields = ("caption", "alt_text","report")
+        widgets = {"caption": forms.Textarea(attrs={"rows": 4}),"alt_text": forms.Textarea(attrs={"rows": 4})}
 
 
 class SpatialPointUploadForm(forms.Form):

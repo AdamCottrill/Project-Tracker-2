@@ -85,3 +85,11 @@ def project(db, user):
 
     project = ProjectFactory.create(prj_cd="LHA_IA12_111", owner=user)
     return project
+
+@pytest.fixture(scope=SCOPE)
+def project_image(db, user):
+
+    project = ProjectFactory(prj_cd="LHA_IA12_999")
+    projectimage = ProjectImageFactory(project=project, caption="Image Caption Test", alt_text="Image Alt Text Test")
+
+    return projectimage

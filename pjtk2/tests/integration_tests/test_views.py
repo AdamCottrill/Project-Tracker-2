@@ -745,7 +745,7 @@ class TestDetailPageCancelledProjects(TestCase):
         )
 
         self.CancelBtn = (
-            '<button type="button" ' + 'class="btn btn-danger mx-1">Cancel</button>'
+            '<button type="button" ' + 'class="btn btn-danger mx-1">Cancel Project</button>'
         )
 
         self.UnCancelBtn = (
