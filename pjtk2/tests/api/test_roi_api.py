@@ -127,9 +127,11 @@ class ProjectAPITest(APITestCase):
             points, many=True, context={"request": request}
         )
 
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), len(serializer.data))
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(set(expected), set(observed))
 
     def test_points_in_roi_api_post_good_roi_json(self):
         """If we pass in a valid roi as json, the api should return a
@@ -153,8 +155,11 @@ class ProjectAPITest(APITestCase):
             points, many=True, context={"request": request}
         )
 
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(len(response.data), len(serializer.data))
+        self.assertEqual(set(expected), set(observed))
 
     def test_points_in_roi_api_post_no_points(self):
         """If we pass in a valid roi, that does not include any sample points,
@@ -248,13 +253,15 @@ class ProjectAPITest(APITestCase):
         response = self.client.post(url, data)
         request = self.factory.get(url)
 
-        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_INN")
+        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_INN").order_by("label")
         serializer = ProjectPointSerializer(
             points, many=True, context={"request": request}
         )
 
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(set(expected), set(observed))
 
     def test_projects_contained_in_roi_api_post_good_roi_json(self):
         """If we pass in a valid roi as json, the api should return a list of
@@ -266,13 +273,15 @@ class ProjectAPITest(APITestCase):
         response = self.client.post(url, data)
         request = self.factory.get(url)
 
-        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_INN")
+        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_INN").order_by("label")
         serializer = ProjectPointSerializer(
             points, many=True, context={"request": request}
         )
 
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(set(expected), set(observed))
 
     def test_projects_contained_in_roi_api_post_no_points(self):
         """If we pass in a valid roi, that does not include any sample points,
@@ -364,13 +373,14 @@ class ProjectAPITest(APITestCase):
         response = self.client.post(url, data)
         request = self.factory.get(url)
 
-        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_LAP")
+        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_LAP").order_by("label")
         serializer = ProjectPointSerializer(
             points, many=True, context={"request": request}
         )
-
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(set(expected), set(observed))
 
     def test_projects_partially_contained_in_roi_api_post_good_roi_json(self):
         """If we pass in a valid roi as json, the api should return a list of
@@ -385,13 +395,15 @@ class ProjectAPITest(APITestCase):
         response = self.client.post(url, data)
         request = self.factory.get(url)
 
-        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_LAP")
+        points = SamplePoint.objects.filter(project__prj_cd="LHA_IA16_LAP").order_by("label")
         serializer = ProjectPointSerializer(
             points, many=True, context={"request": request}
         )
 
+        expected = [x["label"] for x in response.data]
+        observed = [x["label"] for x in serializer.data]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(set(expected), set(observed))
 
     def test_projects_partially_contained_in_roi_api_post_no_points(self):
         """If we pass in a valid roi, that does not include any sample points,

@@ -1308,6 +1308,7 @@ class ProjectImage(models.Model):
     order = models.IntegerField("the order that the images are presented", default=0)
     image_path = models.ImageField(upload_to=get_image_path)
     caption = models.CharField("figure caption", max_length=1000)
+    alt_text = models.CharField("alternative text for screen readers", max_length=1000)
     # alt_text = models.CharField("figure caption", max_length=1000)
     report = models.BooleanField(
         "should this image be included in the annual report too?", default=True

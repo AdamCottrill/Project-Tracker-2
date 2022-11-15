@@ -13,7 +13,7 @@
         <h4> Are you sure you want to permanently delete this image?</h4>
         <form method="post", action="">
         {% csrf_token %}
-        <a href="{{ project.get_absolute_url }}" class="btn btn-default float-right">No - Keep this image</a>
+        <a href="{{ project.get_absolute_url }}" class="btn btn-primary float-right">No - Keep this image</a>
         <input type="submit" value="Yes - Delete the image" class="btn btn-danger"/>
         </form>
 
@@ -21,7 +21,7 @@
         <div class="card card-default">
             <div class="card-body">
 
-                <img class="img-responsive center-block"  src="../../../../{{ image.image_path.url }}">
+                <img class="img-fluid center-block"  src="{{ image.image_path.url }}" alt="{{ image.alt_text }}">
                 <p  style="text-align:center">{{ image.caption }}
 
             </div>
